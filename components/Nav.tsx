@@ -1,11 +1,12 @@
 "use client";
 
 import {
-  GraduationCapIcon,
-  MessageIcon,
-  PaletteIcon,
-  UserIcon,
-} from "@/components/icons";
+  Briefcase,
+  GraduationCap,
+  MessageCircle,
+  User,
+  type LucideIcon,
+} from "lucide-react";
 
 export type SectionId = "sobre" | "aprendizado" | "portfolio" | "contato";
 
@@ -16,11 +17,11 @@ const desktopItems: { id: SectionId; label: string }[] = [
   { id: "contato", label: "Contato" },
 ];
 
-const mobileItems: { id: SectionId; label: string; icon: typeof UserIcon }[] = [
-  { id: "sobre", label: "Sobre", icon: UserIcon },
-  { id: "aprendizado", label: "Aprendizado", icon: GraduationCapIcon },
-  { id: "portfolio", label: "Portfólio", icon: PaletteIcon },
-  { id: "contato", label: "Contato", icon: MessageIcon },
+const mobileItems: { id: SectionId; label: string; icon: LucideIcon }[] = [
+  { id: "sobre", label: "Sobre", icon: User },
+  { id: "aprendizado", label: "Aprendizado", icon: GraduationCap },
+  { id: "portfolio", label: "Portfólio", icon: Briefcase },
+  { id: "contato", label: "Contato", icon: MessageCircle },
 ];
 
 type NavProps = {
@@ -32,11 +33,8 @@ type NavProps = {
 export function Nav({ variant, section, onChange }: NavProps) {
   if (variant === "mobile") {
     return (
-      <nav
-        aria-label="Seções"
-        className="rounded-[24px] bg-card px-7 py-3.5"
-      >
-        <ul className="grid grid-cols-4 items-center">
+      <nav aria-label="Seções" className="rounded-[24px] bg-card px-5 py-4">
+        <ul className="grid grid-cols-4 items-center gap-1">
           {mobileItems.map((item) => {
             const active = item.id === section;
             const Icon = item.icon;
@@ -47,11 +45,11 @@ export function Nav({ variant, section, onChange }: NavProps) {
                   onClick={() => onChange(item.id)}
                   aria-label={item.label}
                   aria-current={active ? "page" : undefined}
-                  className={`flex h-9 w-9 items-center justify-center rounded-xl transition-colors ${
+                  className={`flex h-11 w-11 items-center justify-center rounded-xl transition-colors ${
                     active ? "text-accent" : "text-[#8d8d8d] hover:text-white"
                   }`}
                 >
-                  <Icon className="h-6 w-6" />
+                  <Icon className="size-6" strokeWidth={1.75} aria-hidden="true" />
                 </button>
               </li>
             );
@@ -64,9 +62,9 @@ export function Nav({ variant, section, onChange }: NavProps) {
   return (
     <nav
       aria-label="Seções"
-      className="rounded-bl-[24px] bg-nav px-7 py-[18px]"
+      className="rounded-bl-[24px] bg-nav px-8 py-[18px]"
     >
-      <ul className="flex items-center gap-6">
+      <ul className="flex items-center gap-8">
         {desktopItems.map((item) => {
           const active = item.id === section;
           return (
@@ -75,7 +73,7 @@ export function Nav({ variant, section, onChange }: NavProps) {
                 type="button"
                 onClick={() => onChange(item.id)}
                 aria-current={active ? "page" : undefined}
-                className={`text-[14px] font-medium tracking-tight transition-colors ${
+                className={`text-[15px] font-medium tracking-tight transition-colors ${
                   active ? "text-accent" : "text-[#c8c8c8] hover:text-white"
                 }`}
               >

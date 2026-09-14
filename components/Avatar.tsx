@@ -5,24 +5,31 @@ type AvatarProps = {
   size: "sidebar" | "header";
 };
 
+const LINKEDIN_URL = "https://www.linkedin.com/in/murilogiampiccolopapa/";
+
 const sizeClass = {
-  sidebar: "h-[186px] w-[186px]",
-  header: "h-[92px] w-[92px]",
+  sidebar: "h-auto w-[186px]",
+  header: "h-auto w-[92px]",
 };
 
 export function Avatar({ size }: AvatarProps) {
   return (
-    <div
-      className={`relative shrink-0 overflow-hidden rounded-full bg-[#2c979f] ${sizeClass[size]}`}
+    <a
+      href={LINKEDIN_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Abrir LinkedIn de Murilo Giampiccolo Papa"
+      className="avatar-link shrink-0"
     >
       <Image
         src="/avatar.png"
         alt={`${profile.firstName} ${profile.lastName}`}
-        fill
+        width={735}
+        height={1080}
+        preload
         sizes={size === "sidebar" ? "186px" : "92px"}
-        priority
-        className="object-contain scale-[0.92]"
+        className={`avatar-image object-contain ${sizeClass[size]}`}
       />
-    </div>
+    </a>
   );
 }

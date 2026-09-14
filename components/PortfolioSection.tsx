@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { CloseIcon, ExternalLinkIcon } from "@/components/icons";
+import { ExternalLink, X } from "lucide-react";
 import {
   projects,
   type FlipProject,
@@ -81,7 +81,11 @@ function LinkProjectCard({
     >
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-[17px] font-semibold text-white">{project.title}</h3>
-        <ExternalLinkIcon className="mt-0.5 h-4 w-4 shrink-0 text-[#8d8d8d]" />
+        <ExternalLink
+          className="mt-0.5 size-4 shrink-0 text-[#8d8d8d]"
+          strokeWidth={1.75}
+          aria-hidden="true"
+        />
       </div>
       <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-[#c8c8c8]">
         {project.summary}
@@ -155,7 +159,7 @@ function FlipProjectCard({
             onClick={onClose}
             className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-[#c8c8c8] transition-colors hover:bg-[#1e1e1e] hover:text-white"
           >
-            <CloseIcon className="h-4 w-4" />
+            <X className="size-4" strokeWidth={1.8} aria-hidden="true" />
           </button>
           <h3 className="pr-8 text-[17px] font-semibold text-white">
             {project.title}

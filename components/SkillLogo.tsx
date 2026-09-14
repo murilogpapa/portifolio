@@ -1,0 +1,115 @@
+import {
+  siNextdotjs,
+  siReact,
+  siTailwindcss,
+} from "simple-icons";
+import { BrandIcon } from "@/components/BrandIcon";
+import type { SkillId } from "@/lib/content";
+
+type SkillLogoProps = {
+  id: SkillId;
+  label: string;
+};
+
+export function SkillLogo({ id, label }: SkillLogoProps) {
+  switch (id) {
+    case "html":
+      return <TypeMark label="HTML" color="#E44D26" size="text-[28px] md:text-[32px]" />;
+    case "css":
+      return <TypeMark label="CSS" color="#1572B6" size="text-[28px] md:text-[32px]" />;
+    case "js":
+      return <TypeMark label="JS" color="#F7DF1E" size="text-[34px] md:text-[38px]" />;
+    case "ts":
+      return <TypeMark label="TS" color="#3178C6" size="text-[34px] md:text-[38px]" />;
+    case "sql":
+      return <TypeMark label="SQL" color="#F2C94C" size="text-[28px] md:text-[32px]" />;
+    case "photoshop":
+      return <TypeMark label="Ps" color="#31A8FF" size="text-[40px] md:text-[44px]" />;
+    case "react":
+      return (
+        <BrandIcon
+          icon={siReact}
+          fill={`#${siReact.hex}`}
+          className="h-[72px] w-[72px] md:h-[78px] md:w-[78px]"
+        />
+      );
+    case "next":
+      return (
+        <BrandIcon
+          icon={siNextdotjs}
+          fill="#f5f5f5"
+          className="h-[68px] w-[68px] md:h-[74px] md:w-[74px]"
+        />
+      );
+    case "tailwind":
+      return (
+        <BrandIcon
+          icon={siTailwindcss}
+          fill={`#${siTailwindcss.hex}`}
+          className="h-[58px] w-[58px] md:h-[64px] md:w-[64px]"
+        />
+      );
+    case "python":
+      return <PythonMark />;
+    case "figma":
+      return <FigmaMark />;
+    default: {
+      const _exhaustive: never = id;
+      return <span className="sr-only">{label ?? _exhaustive}</span>;
+    }
+  }
+}
+
+function TypeMark({
+  label,
+  color,
+  size,
+}: {
+  label: string;
+  color: string;
+  size: string;
+}) {
+  return (
+    <span
+      className={`select-none font-extrabold tracking-tight ${size}`}
+      style={{ color }}
+    >
+      {label}
+    </span>
+  );
+}
+
+function FigmaMark() {
+  return (
+    <svg
+      viewBox="0 0 38 57"
+      className="h-[62px] w-[41px] md:h-[68px] md:w-[45px]"
+      aria-hidden="true"
+    >
+      <path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0Z" />
+      <path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0Z" />
+      <path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19Z" />
+      <path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5Z" />
+      <path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5Z" />
+    </svg>
+  );
+}
+
+function PythonMark() {
+  return (
+    <svg
+      viewBox="0 0 256 255"
+      className="h-[70px] w-[70px] md:h-[76px] md:w-[76px]"
+      aria-hidden="true"
+    >
+      <path
+        fill="#3776AB"
+        d="M126.916.072c-64.832 0-60.784 28.115-60.784 28.115l.072 29.128h61.868v8.745H41.631S.145 61.355.145 126.77c0 65.417 36.21 63.097 36.21 63.097h21.61v-30.356s-1.165-36.21 35.632-36.21h61.252s34.51.651 34.51-33.319V33.97S194.67.072 126.916.072ZM92.802 19.66a11.01 11.01 0 0 1 11.008 11.008 11.01 11.01 0 0 1-11.008 11.012 11.01 11.01 0 0 1-11.012-11.012 11.01 11.01 0 0 1 11.012-11.007Z"
+      />
+      <path
+        fill="#FFD343"
+        d="M128.757 254.126c64.832 0 60.784-28.115 60.784-28.115l-.072-29.128H127.6v-8.745h86.441s41.486 4.705 41.486-60.71c0-65.417-36.21-63.097-36.21-63.097h-21.61v30.356s1.165 36.21-35.632 36.21h-61.252s-34.51-.651-34.51 33.319v56.013s-5.235 33.897 62.518 33.897Zm34.114-19.588a11.01 11.01 0 0 1-11.012-11.007 11.01 11.01 0 0 1 11.012-11.012 11.01 11.01 0 0 1 11.007 11.012 11.01 11.01 0 0 1-11.007 11.007Z"
+      />
+    </svg>
+  );
+}
