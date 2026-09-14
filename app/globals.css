@@ -28,3 +28,71 @@ body {
 body {
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
+
+.project-scene {
+  perspective: 1400px;
+}
+
+.project-inner {
+  position: relative;
+  min-height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-inner.is-flipped {
+  min-height: 20rem;
+  transform: rotateY(180deg);
+}
+
+@media (min-width: 768px) {
+  .project-inner.is-flipped {
+    transform: rotateY(180deg) scale(1.04);
+  }
+}
+
+.project-face {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.project-front {
+  height: 100%;
+}
+
+.project-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.project-inner:not(.is-flipped) .project-back {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-inner {
+    transition: none;
+  }
+
+  .project-inner.is-flipped {
+    transform: none;
+  }
+
+  .project-inner.is-flipped .project-front {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .project-inner:not(.is-flipped) .project-back {
+    visibility: hidden;
+    transform: none;
+  }
+
+  .project-inner.is-flipped .project-back {
+    position: relative;
+    transform: none;
+  }
+}

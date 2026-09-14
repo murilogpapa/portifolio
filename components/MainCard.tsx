@@ -5,7 +5,6 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   CssMark,
-  ExternalLinkIcon,
   FigmaMark,
   HtmlMark,
   JsMark,
@@ -16,15 +15,16 @@ import {
   PinIcon,
   PythonMark,
   ReactMark,
+  SqlMark,
   TailwindMark,
   TsMark,
 } from "@/components/icons";
+import { PortfolioSection } from "@/components/PortfolioSection";
 import { SocialLinks } from "@/components/SocialLinks";
 import type { SectionId } from "@/components/Nav";
 import {
   aboutParagraphs,
   learningItems,
-  projects,
   skillList,
   type SkillId,
 } from "@/lib/content";
@@ -46,6 +46,7 @@ const skillMarks: Record<SkillId, ReactNode> = {
   next: <NextMark className="h-[72px] w-[72px]" />,
   tailwind: <TailwindMark className="h-14 w-[92px]" />,
   python: <PythonMark className="h-[70px] w-[70px]" />,
+  sql: <SqlMark className="h-[70px] w-[70px]" />,
   figma: <FigmaMark className="h-[66px] w-[44px]" />,
   photoshop: <PhotoshopMark className="h-[72px] w-[72px]" />,
 };
@@ -56,8 +57,27 @@ type MainCardProps = {
 };
 
 export function MainCard({ section, nav }: MainCardProps) {
+  const [openProjectId, setOpenProjectId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (section !== "portfolio") {
+      setOpenProjectId(null);
+      return;
+    }
+    const card = new URLSearchParams(window.location.search).get("flip");
+    if (card === "ordem-files" || card === "painel-3d-muc") {
+      setOpenProjectId(card);
+    }
+  }, [section]);
+
+  const flipping = section === "portfolio" && openProjectId !== null;
+
   return (
-    <article className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-[24px] bg-card md:min-h-[640px]">
+    <article
+      className={`relative flex min-h-0 min-w-0 w-full flex-1 flex-col rounded-[24px] bg-card md:min-h-[640px] ${
+        flipping ? "overflow-x-hidden md:overflow-visible" : "overflow-hidden"
+      }`}
+    >
       <div className="flex items-start justify-between">
         <div className={`px-6 pt-6 md:px-8 ${nav ? "md:pt-[18px]" : "pt-6"}`}>
           <SectionTitle>{titles[section]}</SectionTitle>
@@ -65,10 +85,20 @@ export function MainCard({ section, nav }: MainCardProps) {
         {nav}
       </div>
 
-      <div className="flex w-full min-w-0 flex-1 flex-col overflow-x-hidden px-6 pb-6 md:px-8 md:pb-8">
+      <div
+        className={`flex w-full min-w-0 max-w-full flex-1 flex-col px-6 pb-6 md:px-8 md:pb-8 ${
+          flipping ? "overflow-x-hidden md:overflow-visible" : "overflow-x-hidden"
+        }`}
+      >
         {section === "sobre" ? <AboutSection /> : null}
         {section === "aprendizado" ? <LearningSection /> : null}
-        {section === "portfolio" ? <PortfolioSection /> : null}
+        {section === "portfolio" ? (
+          <PortfolioSection
+            openId={openProjectId}
+            onOpen={setOpenProjectId}
+            onClose={() => setOpenProjectId(null)}
+          />
+        ) : null}
         {section === "contato" ? <ContactSection /> : null}
       </div>
     </article>
@@ -89,9 +119,11 @@ function SectionTitle({ children }: { children: ReactNode }) {
 function AboutSection() {
   return (
     <>
-      <div className="mt-1 w-full max-w-full space-y-4 pr-3 text-[13.5px] leading-[1.7] text-[#d0d0d0] md:max-w-3xl md:pr-0 md:text-[14.5px] md:leading-[1.75]">
+      <div className="mt-1 w-full min-w-0 max-w-full space-y-4 overflow-hidden pr-4 text-[13.5px] leading-[1.7] break-words text-[#d0d0d0] md:max-w-3xl md:pr-0 md:text-[14.5px] md:leading-[1.75]">
         {aboutParagraphs.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
+          <p key={paragraph} className="max-w-full">
+            {paragraph}
+          </p>
         ))}
       </div>
       <SkillsCarousel />
@@ -120,50 +152,11 @@ function LearningSection() {
   );
 }
 
-function PortfolioSection() {
-  return (
-    <ul className="mt-2 grid grid-cols-1 gap-3 lg:grid-cols-3">
-      {projects.map((project) => {
-        const placeholder = project.href === "#";
-        return (
-          <li key={project.id}>
-            <a
-              href={project.href}
-              title={placeholder ? "TODO: GitHub ou demo" : project.title}
-              className="flex h-full flex-col rounded-[24px] bg-[#2a2a2a] px-5 py-5 transition-colors hover:bg-[#323232]"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-[17px] font-semibold text-white">
-                  {project.title}
-                </h3>
-                <ExternalLinkIcon className="mt-0.5 h-4 w-4 shrink-0 text-[#8d8d8d]" />
-              </div>
-              <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-[#c8c8c8]">
-                {project.summary}
-              </p>
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {project.stack.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-full bg-[#1e1e1e] px-3 py-1 text-[11px] font-medium text-[#d0d0d0]"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </a>
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
 function ContactSection() {
   return (
     <div className="mt-2 max-w-xl">
       <p className="text-[14.5px] leading-[1.75] text-[#d0d0d0]">
-        Fala comigo por e-mail, telefone ou redes.
+        Me chama por e-mail, telefone, WhatsApp ou redes.
       </p>
       <ul className="mt-5 flex flex-col gap-3">
         <li>
@@ -219,7 +212,7 @@ function SkillsCarousel() {
   return (
     <section className="mt-8 md:mt-10">
       <SectionTitle>Skills</SectionTitle>
-      <div className="relative mt-5">
+      <div className="relative mt-5 w-full min-w-0 max-w-full overflow-hidden">
         <button
           type="button"
           onClick={prev}

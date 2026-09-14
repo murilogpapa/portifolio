@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <main className="min-h-dvh bg-background">
-      <div className="mx-auto flex w-full min-w-0 max-w-[430px] flex-col gap-3 px-[18px] py-5 md:hidden">
+      <div className="mx-auto flex w-full min-w-0 max-w-[430px] flex-col gap-3 overflow-x-hidden px-[18px] py-5 md:hidden">
         <MobileHeader />
         <Nav variant="mobile" section={section} onChange={onChange} />
         <MainCard section={section} />

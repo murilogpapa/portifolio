@@ -111,6 +111,35 @@ export function DiscordIcon({ className }: IconProps) {
   );
 }
 
+export function WhatsAppIcon({ className }: IconProps) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M12.04 2C6.58 2 2.15 6.4 2.15 11.84c0 1.73.45 3.41 1.3 4.9L2 22l5.4-1.41a10 10 0 0 0 4.64 1.13h.01c5.46 0 9.89-4.4 9.89-9.85C21.94 6.4 17.5 2 12.04 2Zm5.76 14.16c-.24.68-1.4 1.3-1.94 1.38-.5.07-1.12.1-1.81-.11-.42-.13-.95-.31-1.64-.6-2.89-1.25-4.77-4.16-4.92-4.35-.14-.2-1.18-1.57-1.18-3 0-1.41.74-2.1 1-2.39.24-.26.64-.38 1.02-.38.12 0 .23 0 .33.01.29.01.43.03.62.48.24.56.82 2 .89 2.14.07.14.12.31.02.5-.1.2-.15.31-.29.48-.14.16-.3.36-.43.49-.14.14-.29.3-.12.58.16.28.73 1.2 1.56 1.95 1.08.96 1.98 1.26 2.28 1.4.3.14.47.12.65-.07.18-.2.75-.87.95-1.17.2-.3.4-.24.67-.14.27.1 1.71.8 2 .95.29.14.48.22.55.34.07.13.07.74-.17 1.42Z" />
+    </svg>
+  );
+}
+
+export function CloseIcon({ className }: IconProps) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M6 6l12 12M18 6 6 18" />
+    </svg>
+  );
+}
+
 export function UserIcon({ className }: IconProps) {
   return (
     <svg
@@ -333,6 +362,21 @@ export function PythonMark({ className }: IconProps) {
         fill="#FFD43B"
         d="M24.3 44c8.2 0 7.7-3.6 7.7-3.6v-3.7h-7.8v-1.1h10.5s7.3 0 7.3-8.4-3.2-8.5-3.2-8.5h-3.7V23s.2 5-5.3 5H24v11.3s-.3 4.7.3 4.7Zm4.3-2.5a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8Z"
       />
+    </svg>
+  );
+}
+
+export function SqlMark({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 64 48" fill="none" aria-hidden="true">
+      <ellipse cx="32" cy="12" rx="18" ry="7" stroke="#F2C94C" strokeWidth="2.4" />
+      <path
+        d="M14 12v24c0 4 8 7 18 7s18-3 18-7V12"
+        stroke="#F2C94C"
+        strokeWidth="2.4"
+      />
+      <path d="M14 20c0 4 8 7 18 7s18-3 18-7" stroke="#F2C94C" strokeWidth="2.4" />
+      <path d="M14 28c0 4 8 7 18 7s18-3 18-7" stroke="#F2C94C" strokeWidth="2.4" />
     </svg>
   );
 }

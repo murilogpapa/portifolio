@@ -9,10 +9,30 @@ export const profile = {
 } as const;
 
 export const socials = [
-  { id: "github" as const, label: "GitHub", href: "#" }, // TODO: URL real
-  { id: "linkedin" as const, label: "LinkedIn", href: "#" }, // TODO: URL real
-  { id: "instagram" as const, label: "Instagram", href: "#" }, // TODO: URL real
-  { id: "discord" as const, label: "Discord", href: "#" }, // TODO: URL real
+  {
+    id: "github" as const,
+    label: "GitHub",
+    href: "https://github.com/murilogpapa",
+    display: "GitHub",
+  },
+  {
+    id: "linkedin" as const,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/murilogiampiccolopapa/",
+    display: "LinkedIn",
+  },
+  {
+    id: "whatsapp" as const,
+    label: "WhatsApp",
+    href: "https://wa.me/5511944255805",
+    display: "55 11944255805",
+  },
+  {
+    id: "discord" as const,
+    label: "Discord",
+    href: null,
+    display: "Muc",
+  },
 ];
 
 export type SocialId = (typeof socials)[number]["id"];
