@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { SectionTitle } from "@/components/SectionTitle";
 import { SkillLogo } from "@/components/SkillLogo";
+import { useFlipPhase } from "@/components/useFlipPhase";
 import { skillList, type Skill, type SkillLevel } from "@/lib/content";
 
 const DESKTOP_VISIBLE = 4;
@@ -186,6 +187,7 @@ export function SkillsCarousel({ variant }: { variant: "desktop" | "mobile" }) {
                       skill={skill}
                       cardKey={cardKey}
                       open={openKey === cardKey}
+                      reduced={reduced}
                       roundedClass="rounded-[24px]"
                       onToggle={() => toggle(cardKey)}
                     />
@@ -218,6 +220,7 @@ export function SkillsCarousel({ variant }: { variant: "desktop" | "mobile" }) {
                           skill={skill}
                           cardKey={cardKey}
                           open={openKey === cardKey}
+                          reduced={reduced}
                           roundedClass="rounded-[22px]"
                           onToggle={() => toggle(cardKey)}
                         />
@@ -247,15 +250,31 @@ function SkillCard({
   skill,
   cardKey,
   open,
+  reduced,
   roundedClass,
   onToggle,
 }: {
   skill: Skill;
   cardKey: string;
   open: boolean;
+  reduced: boolean;
   roundedClass: string;
   onToggle: () => void;
 }) {
+  const { flipped, settled, snap, animating, onFlipEnd } = useFlipPhase(
+    open,
+    reduced,
+  );
+  const innerClass = [
+    "skill-inner h-full w-full",
+    flipped ? "is-flipped" : "",
+    settled ? "is-settled" : "",
+    snap ? "is-snap" : "",
+    animating ? "is-animating" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <button
       type="button"
@@ -265,7 +284,7 @@ function SkillCard({
       onClick={onToggle}
       className={`skill-scene h-full w-full cursor-pointer border-0 bg-transparent p-0 ${open ? "is-open" : ""}`}
     >
-      <div className={`skill-inner h-full w-full ${open ? "is-flipped" : ""}`}>
+      <div className={innerClass} onTransitionEnd={onFlipEnd}>
         <div
           className={`skill-face skill-front ${roundedClass} ${skill.bg}`}
         >
@@ -292,7 +311,7 @@ function LevelDots({ level }: { level: SkillLevel }) {
       {[1, 2, 3].map((n) => (
         <span
           key={n}
-          className={`h-1.5 w-1.5 rounded-full ${
+          className={`h-[6px] w-[6px] rounded-full ${
             n <= filled ? "bg-white" : "bg-white/15"
           }`}
         />

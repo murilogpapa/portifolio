@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ExternalLink, X } from "lucide-react";
+import { useFlipPhase } from "@/components/useFlipPhase";
 import {
   projects,
   type FlipProject,
@@ -112,10 +113,33 @@ function FlipProjectCard({
   onClose: () => void;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const [reduced, setReduced] = useState(false);
+  const { flipped, settled, snap, animating, onFlipEnd } = useFlipPhase(
+    open,
+    reduced,
+  );
+
+  useEffect(() => {
+    const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduced(motionMq.matches);
+    sync();
+    motionMq.addEventListener("change", sync);
+    return () => motionMq.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     if (open) closeRef.current?.focus();
   }, [open]);
+
+  const innerClass = [
+    "project-inner h-full",
+    flipped ? "is-flipped" : "",
+    settled ? "is-settled" : "",
+    snap ? "is-snap" : "",
+    animating ? "is-animating" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div
@@ -123,7 +147,7 @@ function FlipProjectCard({
         open ? "relative z-30" : "flex-1"
       } ${dimmed ? "opacity-40" : ""}`}
     >
-      <div className={`project-inner h-full ${open ? "is-flipped" : ""}`}>
+      <div className={innerClass} onTransitionEnd={onFlipEnd}>
         <div className="project-face project-front h-full">
           <button
             type="button"

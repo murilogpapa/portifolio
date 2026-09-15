@@ -34,9 +34,9 @@ export function SkillLogo({ id, label }: SkillLogoProps) {
     case "ts":
       return <Si icon={siTypescript} />;
     case "react":
-      return <Si icon={siReact} className={ICON_LG} />;
+      return <Si icon={siReact} className={ICON_LG} size={74} />;
     case "next":
-      return <Si icon={siNextdotjs} fill="#f5f5f5" className={ICON_LG} />;
+      return <Si icon={siNextdotjs} fill="#f5f5f5" className={ICON_LG} size={74} />;
     case "tailwind":
       return <Si icon={siTailwindcss} />;
     case "vite":
@@ -48,7 +48,7 @@ export function SkillLogo({ id, label }: SkillLogoProps) {
     case "java":
       return <TypeMark label="Java" color="#E76F00" size="text-[28px] md:text-[32px]" />;
     case "c":
-      return <Si icon={siC} className={ICON_LG} />;
+      return <Si icon={siC} className={ICON_LG} size={74} />;
     case "figma":
       return <FigmaMark />;
     case "photoshop":
@@ -68,12 +68,21 @@ function Si({
   icon,
   fill,
   className = ICON,
+  size = 64,
 }: {
   icon: SimpleIcon;
   fill?: string;
   className?: string;
+  size?: number;
 }) {
-  return <BrandIcon icon={icon} fill={fill ?? `#${icon.hex}`} className={className} />;
+  return (
+    <BrandIcon
+      icon={icon}
+      fill={fill ?? `#${icon.hex}`}
+      className={className}
+      size={size}
+    />
+  );
 }
 
 function TypeMark({
@@ -99,6 +108,8 @@ function FigmaMark() {
   return (
     <svg
       viewBox="0 0 38 57"
+      width={41}
+      height={62}
       className="h-[62px] w-[41px] md:h-[68px] md:w-[45px]"
       aria-hidden="true"
     >
@@ -115,6 +126,8 @@ function PythonMark() {
   return (
     <svg
       viewBox="0 0 256 255"
+      width={70}
+      height={70}
       className="h-[70px] w-[70px] md:h-[76px] md:w-[76px]"
       aria-hidden="true"
     >

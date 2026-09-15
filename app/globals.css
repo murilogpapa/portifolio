@@ -70,30 +70,48 @@ body {
 }
 
 .project-scene {
-  perspective: 1400px;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
 }
 
 .project-inner {
   position: relative;
   min-height: 100%;
+  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
+  transform: translate3d(0, 0, 0);
+  transform-origin: center center;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-inner.is-animating {
+  will-change: transform;
+}
+
+.project-inner.is-snap,
+.project-inner.is-settled {
+  transition: none;
 }
 
 .project-inner.is-flipped {
   min-height: 20rem;
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translate3d(0, 0, 0);
 }
 
-@media (min-width: 768px) {
-  .project-inner.is-flipped {
-    transform: rotateY(180deg) scale(1.04);
-  }
+.project-inner.is-settled {
+  will-change: auto;
+  -webkit-transform-style: flat;
+  transform-style: flat;
+  transform: none;
 }
 
 .project-face {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate3d(0, 0, 0);
 }
 
 .project-front {
@@ -103,13 +121,24 @@ body {
 .project-back {
   position: absolute;
   inset: 0;
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translate3d(0, 0, 0);
   overflow-y: auto;
   overscroll-behavior: contain;
 }
 
 .project-inner:not(.is-flipped) .project-back {
   pointer-events: none;
+}
+
+.project-inner.is-settled .project-front {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.project-inner.is-settled .project-back {
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+  transform: none;
 }
 
 .skills-viewport {
@@ -142,7 +171,10 @@ body {
 .skill-scene {
   position: relative;
   overflow: visible;
+  -webkit-perspective: 1000px;
   perspective: 1000px;
+  perspective-origin: 50% 50%;
+  transform: translate3d(0, 0, 0);
   transform-origin: center center;
   transition: transform 180ms ease;
 }
@@ -150,12 +182,31 @@ body {
 .skill-inner {
   position: relative;
   overflow: visible;
+  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
+  transform: translate3d(0, 0, 0);
+  transform-origin: center center;
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.skill-inner.is-animating {
+  will-change: transform;
+}
+
+.skill-inner.is-snap,
+.skill-inner.is-settled {
+  transition: none;
+}
+
 .skill-inner.is-flipped {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translate3d(0, 0, 0);
+}
+
+.skill-inner.is-settled {
+  will-change: auto;
+  -webkit-transform-style: flat;
+  transform-style: flat;
+  transform: none;
 }
 
 .skill-face {
@@ -165,25 +216,44 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   padding: 0.75rem;
   text-align: center;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate3d(0, 0, 0);
+}
+
+.skill-face svg {
+  shape-rendering: geometricPrecision;
 }
 
 .skill-back {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translate3d(0, 0, 0);
 }
 
 .skill-inner:not(.is-flipped) .skill-back {
   pointer-events: none;
 }
 
+.skill-inner.is-settled .skill-front {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.skill-inner.is-settled .skill-back {
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+  transform: none;
+}
+
 @media (hover: hover) and (pointer: fine) {
-  .skill-scene:hover,
-  .skill-scene:focus-visible {
+  .skill-scene:hover:not(.is-open),
+  .skill-scene:focus-visible:not(.is-open) {
     z-index: 2;
-    transform: translateY(-3px) scale(1.04);
+    transform: translate3d(0, -3px, 0) scale(1.04);
   }
 }
 
@@ -213,11 +283,14 @@ body {
     transform: none;
   }
 
-  .project-inner {
+  .project-inner,
+  .project-inner.is-animating {
     transition: none;
+    will-change: auto;
   }
 
-  .project-inner.is-flipped {
+  .project-inner.is-flipped,
+  .project-inner.is-settled {
     transform: none;
   }
 
@@ -238,16 +311,21 @@ body {
 
   .skill-scene,
   .skill-scene:hover,
-  .skill-scene:focus-visible {
+  .skill-scene:hover:not(.is-open),
+  .skill-scene:focus-visible,
+  .skill-scene:focus-visible:not(.is-open) {
     transition: none;
     transform: none;
   }
 
-  .skill-inner {
+  .skill-inner,
+  .skill-inner.is-animating {
     transition: none;
+    will-change: auto;
   }
 
-  .skill-inner.is-flipped {
+  .skill-inner.is-flipped,
+  .skill-inner.is-settled {
     transform: none;
   }
 
