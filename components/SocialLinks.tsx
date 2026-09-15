@@ -1,7 +1,10 @@
+"use client";
+
+import type { ReactNode } from "react";
 import { siDiscord, siGithub, siWhatsapp } from "simple-icons";
 import { BrandIcon } from "@/components/BrandIcon";
+import { DiscordCopyButton } from "@/components/DiscordCopyButton";
 import { socials, type SocialId } from "@/lib/profile";
-import type { ReactNode } from "react";
 
 function LinkedInMark({ className }: { className: string }) {
   return (
@@ -58,16 +61,23 @@ export function SocialLinks({ variant }: SocialLinksProps) {
             ? social.label
             : `${social.label}: ${social.display}`;
         const className = isContact
-          ? "flex items-center gap-3 rounded-[18px] bg-[#2a2a2a] px-4 py-3.5 text-[14px] text-[#cfcfcf] transition-colors hover:text-white"
+          ? "hit-area relative flex min-h-11 items-center gap-3 rounded-[18px] bg-[#2a2a2a] px-4 py-3.5 text-[14px] text-[#cfcfcf] transition-colors hover:text-white"
           : isHeader
-            ? "flex h-10 w-10 items-center justify-center rounded-lg bg-[#2a2a2a] text-[#cfcfcf] transition-colors hover:text-white"
-            : "flex h-11 w-11 items-center justify-center text-[#9a9a9a] transition-colors hover:text-white";
+            ? "hit-area relative inline-flex h-11 w-11 min-h-11 min-w-11 items-center justify-center rounded-lg bg-[#2a2a2a] text-[#cfcfcf] transition-colors hover:text-white"
+            : "hit-area relative inline-flex h-11 w-11 min-h-11 min-w-11 items-center justify-center text-[#9a9a9a] transition-colors hover:text-white";
         const iconClass = isContact ? "size-[22px]" : "size-6";
         const icon: ReactNode = <SocialGlyph id={social.id} className={iconClass} />;
 
         return (
           <li key={social.id}>
-            {social.href ? (
+            {social.id === "discord" ? (
+              <DiscordCopyButton
+                className={className}
+                icon={icon}
+                showLabel={isContact}
+                display={display}
+              />
+            ) : social.href ? (
               <a
                 href={social.href}
                 aria-label={title}
@@ -79,12 +89,7 @@ export function SocialLinks({ variant }: SocialLinksProps) {
                 {icon}
                 {isContact ? <span>{display}</span> : null}
               </a>
-            ) : (
-              <span aria-label={title} title={title} className={className}>
-                {icon}
-                {isContact ? <span>{display}</span> : null}
-              </span>
-            )}
+            ) : null}
           </li>
         );
       })}

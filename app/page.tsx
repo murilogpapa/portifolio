@@ -23,18 +23,23 @@ function writeSection(id: SectionId) {
 }
 
 export default function Home() {
-  const [section, setSection] = useState<SectionId>(readSection);
+  const [section, setSection] = useState<SectionId>("sobre");
 
   useLayoutEffect(() => {
     writeSection(section);
   }, [section]);
+
+  useLayoutEffect(() => {
+    const id = readSection();
+    writeSection(id);
+    setSection(id);
+  }, []);
 
   useEffect(() => {
     const applyHash = () => {
       const id = window.location.hash.replace("#", "");
       if (isSection(id)) setSection(id);
     };
-    applyHash();
     window.addEventListener("hashchange", applyHash);
     return () => window.removeEventListener("hashchange", applyHash);
   }, []);
@@ -53,13 +58,19 @@ export default function Home() {
         <MainCard variant="mobile" section={section} />
       </div>
 
-      <div className="mx-auto hidden w-full max-w-[1520px] items-stretch gap-6 px-8 py-8 md:flex lg:gap-8 lg:px-12 xl:px-16">
-        <Sidebar />
-        <MainCard
-          variant="desktop"
-          section={section}
-          nav={<Nav variant="desktop" section={section} onChange={onChange} />}
-        />
+      <div className="desktop-shell">
+        <div className="desktop-stage">
+          <div className="desktop-stage-inner">
+            <Sidebar />
+            <MainCard
+              variant="desktop"
+              section={section}
+              nav={
+                <Nav variant="desktop" section={section} onChange={onChange} />
+              }
+            />
+          </div>
+        </div>
       </div>
     </main>
   );

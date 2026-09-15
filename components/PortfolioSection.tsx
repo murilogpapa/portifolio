@@ -143,54 +143,57 @@ function FlipProjectCard({
 
   return (
     <div
-      className={`project-scene w-full ${
-        open ? "relative z-30" : "flex-1"
+      className={`relative w-full ${
+        open ? "z-30" : "flex-1"
       } ${dimmed ? "opacity-40" : ""}`}
     >
-      <div className={innerClass} onTransitionEnd={onFlipEnd}>
-        <div className="project-face project-front h-full">
-          <button
-            type="button"
-            aria-expanded={open}
-            aria-controls={`${project.id}-details`}
-            tabIndex={open ? -1 : 0}
-            onClick={() => (open ? onClose() : onOpen())}
-            className="flex min-h-[200px] h-full w-full flex-col rounded-[24px] bg-[#2a2a2a] px-5 py-5 text-left transition-colors hover:bg-[#323232]"
+      {open ? (
+        <button
+          ref={closeRef}
+          type="button"
+          aria-label="Fechar"
+          onClick={onClose}
+          className="hit-area absolute right-1.5 top-1.5 z-40 flex h-11 w-11 min-h-11 min-w-11 items-center justify-center rounded-full text-[#c8c8c8] transition-colors hover:bg-[#1e1e1e] hover:text-white"
+        >
+          <X className="size-4" strokeWidth={1.8} aria-hidden="true" />
+        </button>
+      ) : null}
+      <div className={`project-scene w-full ${open ? "" : "h-full"}`}>
+        <div className={innerClass} onTransitionEnd={onFlipEnd}>
+          <div className="project-face project-front h-full">
+            <button
+              type="button"
+              aria-expanded={open}
+              aria-controls={`${project.id}-details`}
+              tabIndex={open ? -1 : 0}
+              onClick={() => (open ? onClose() : onOpen())}
+              className="flex min-h-[200px] h-full w-full flex-col rounded-[24px] bg-[#2a2a2a] px-5 py-5 text-left transition-colors hover:bg-[#323232]"
+            >
+              <h3 className="text-[17px] font-semibold text-white">
+                {project.title}
+              </h3>
+              <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-[#c8c8c8]">
+                {project.summary}
+              </p>
+              <StackList items={project.stack} />
+              <span className="mt-3 text-[11px] font-medium text-[#8d8d8d]">
+                Ver detalhes
+              </span>
+            </button>
+          </div>
+
+          <div
+            id={`${project.id}-details`}
+            className="project-face project-back rounded-[24px] bg-[#2a2a2a] px-5 py-5"
+            aria-hidden={!open}
           >
-            <h3 className="text-[17px] font-semibold text-white">
+            <h3 className="pr-12 text-[17px] font-semibold text-white">
               {project.title}
             </h3>
-            <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-[#c8c8c8]">
-              {project.summary}
+            <p className="mt-3 max-w-full text-[13px] leading-relaxed break-words text-[#d0d0d0] md:text-[13.5px]">
+              {project.back}
             </p>
-            <StackList items={project.stack} />
-            <span className="mt-3 text-[11px] font-medium text-[#8d8d8d]">
-              Ver detalhes
-            </span>
-          </button>
-        </div>
-
-        <div
-          id={`${project.id}-details`}
-          className="project-face project-back rounded-[24px] bg-[#2a2a2a] px-5 py-5"
-          aria-hidden={!open}
-        >
-          <button
-            ref={closeRef}
-            type="button"
-            aria-label="Fechar"
-            tabIndex={open ? 0 : -1}
-            onClick={onClose}
-            className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-[#c8c8c8] transition-colors hover:bg-[#1e1e1e] hover:text-white"
-          >
-            <X className="size-4" strokeWidth={1.8} aria-hidden="true" />
-          </button>
-          <h3 className="pr-8 text-[17px] font-semibold text-white">
-            {project.title}
-          </h3>
-          <p className="mt-3 max-w-full text-[13px] leading-relaxed break-words text-[#d0d0d0] md:text-[13.5px]">
-            {project.back}
-          </p>
+          </div>
         </div>
       </div>
     </div>

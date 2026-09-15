@@ -20,22 +20,19 @@ export const learningItems = [
   {
     id: "assistente-apps",
     title: "Assistente de Desenvolvimento de Aplicativos para IoT",
-    place:
-      "Senac Nações Unidas · Internet das Coisas (IoT) · 01/2022-12/2024",
+    place: "Senac Nações Unidas · Internet das Coisas (IoT) · 01/2022-12/2024",
     status: "Formação complementar",
   },
   {
     id: "assistente-suporte",
     title: "Assistente de Suporte e Manutenção de Computadores e IoT",
-    place:
-      "Senac Nações Unidas · Internet das Coisas (IoT) · 01/2022-12/2024",
+    place: "Senac Nações Unidas · Internet das Coisas (IoT) · 01/2022-12/2024",
     status: "Formação complementar",
   },
   {
     id: "assistente-automacao",
     title: "Assistente de Suporte em Automação IoT",
-    place:
-      "Senac Nações Unidas · Internet das Coisas (IoT) · 01/2022-12/2024",
+    place: "Senac Nações Unidas · Internet das Coisas (IoT) · 01/2022-12/2024",
     status: "Formação complementar",
   },
   {
@@ -123,20 +120,30 @@ export const skillList: {
 }[] = [
   { id: "html", label: "HTML", bg: "bg-[#2a1810]", level: "Intermediário" },
   { id: "css", label: "CSS", bg: "bg-[#10182a]", level: "Intermediário" },
-  { id: "js", label: "JavaScript", bg: "bg-[#2a2610]", level: "Intermediário" },
-  { id: "ts", label: "TypeScript", bg: "bg-[#0f1c2e]", level: "Intermediário" },
-  { id: "react", label: "React", bg: "bg-[#141414]", level: "Intermediário" },
-  { id: "next", label: "Next.js", bg: "bg-[#111111]", level: "Intermediário" },
-  { id: "tailwind", label: "Tailwind", bg: "bg-[#0b1220]", level: "Intermediário" },
+  { id: "js", label: "JavaScript", bg: "bg-[#2a2610]", level: "Básico" },
+  { id: "ts", label: "TypeScript", bg: "bg-[#0f1c2e]", level: "Básico" },
+  { id: "react", label: "React", bg: "bg-[#141414]", level: "Básico" },
+  { id: "next", label: "Next.js", bg: "bg-[#111111]", level: "Básico" },
+  {
+    id: "tailwind",
+    label: "Tailwind",
+    bg: "bg-[#0b1220]",
+    level: "Intermediário",
+  },
   { id: "vite", label: "Vite", bg: "bg-[#1a1228]", level: "Básico" },
   { id: "python", label: "Python", bg: "bg-[#1a2430]", level: "Básico" },
   { id: "sql", label: "SQL", bg: "bg-[#2a2410]", level: "Básico" },
   { id: "java", label: "Java", bg: "bg-[#1a140e]", level: "Básico" },
   { id: "c", label: "C", bg: "bg-[#101820]", level: "Básico" },
   { id: "figma", label: "Figma", bg: "bg-[#2a2a2a]", level: "Intermediário" },
-  { id: "photoshop", label: "Photoshop", bg: "bg-[#001e36]", level: "Intermediário" },
+  {
+    id: "photoshop",
+    label: "Photoshop",
+    bg: "bg-[#001e36]",
+    level: "Intermediário",
+  },
   { id: "swift", label: "Swift", bg: "bg-[#2a1410]", level: "Básico" },
-  { id: "git", label: "Git", bg: "bg-[#241410]", level: "Intermediário" },
+  { id: "git", label: "Git", bg: "bg-[#241410]", level: "Básico" },
 ];
 
 export type Skill = (typeof skillList)[number];

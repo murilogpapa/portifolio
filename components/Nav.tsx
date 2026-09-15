@@ -39,15 +39,14 @@ export function Nav({ variant, section, onChange }: NavProps) {
             const active = item.id === section;
             const Icon = item.icon;
             return (
-              <li key={item.id} className="flex justify-center">
+              <li key={item.id} className="min-w-0">
                 <button
                   type="button"
                   onClick={() => onChange(item.id)}
                   aria-label={item.label}
                   aria-current={active ? "page" : undefined}
                   data-nav={item.id}
-                  suppressHydrationWarning
-                  className="nav-link flex h-11 w-11 items-center justify-center rounded-xl text-[#8d8d8d] transition-colors hover:text-white"
+                  className="hit-area nav-link relative flex min-h-11 min-w-11 w-full items-center justify-center rounded-xl px-2 py-2 text-[#8d8d8d] transition-colors hover:text-white"
                 >
                   <Icon className="size-6" strokeWidth={1.75} aria-hidden="true" />
                 </button>
@@ -74,8 +73,7 @@ export function Nav({ variant, section, onChange }: NavProps) {
                 onClick={() => onChange(item.id)}
                 aria-current={active ? "page" : undefined}
                 data-nav={item.id}
-                suppressHydrationWarning
-                className="nav-link whitespace-nowrap text-[15px] font-semibold tracking-tight text-[#c8c8c8] transition-colors hover:text-white xl:text-[16px]"
+                className="hit-area nav-link relative inline-flex min-h-11 items-center justify-center whitespace-nowrap px-3 py-2 text-[15px] font-semibold tracking-tight text-[#c8c8c8] transition-colors hover:text-white xl:text-[16px]"
               >
                 {item.label}
               </button>

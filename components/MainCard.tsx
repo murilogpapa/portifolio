@@ -41,8 +41,14 @@ export function MainCard({ variant, section, nav }: MainCardProps) {
 
   return (
     <article
-      className={`relative flex min-h-0 min-w-0 w-full flex-1 flex-col rounded-[24px] bg-card ${
-        flipping ? "overflow-x-hidden md:overflow-visible" : "overflow-hidden"
+      className={`relative flex min-h-0 min-w-0 flex-col rounded-[24px] bg-card ${
+        variant === "desktop"
+          ? "desktop-main max-lg:w-full max-lg:flex-1"
+          : "w-full flex-1"
+      } ${
+        flipping
+          ? "overflow-x-hidden md:overflow-visible lg:overflow-hidden"
+          : "overflow-hidden"
       }`}
     >
       <div className="flex shrink-0 items-start justify-between">
@@ -62,9 +68,11 @@ export function MainCard({ variant, section, nav }: MainCardProps) {
 
       <div
         className={`flex w-full min-h-0 min-w-0 max-w-full flex-col px-5 pb-5 md:px-8 md:pb-8 ${
-          variant === "mobile" ? "flex-1" : ""
-        } ${
-          flipping ? "overflow-x-hidden md:overflow-visible" : "overflow-x-hidden"
+          variant === "mobile"
+            ? "flex-1 overflow-x-hidden"
+            : flipping
+              ? "overflow-x-hidden md:overflow-visible lg:flex-1 lg:overflow-x-hidden lg:overflow-y-auto"
+              : "overflow-x-hidden lg:flex-1 lg:overflow-y-auto"
         }`}
       >
         <div className="section-panel" data-panel="sobre">
@@ -135,7 +143,7 @@ function ContactSection() {
         <li>
           <a
             href={profile.emailHref}
-            className="flex items-center gap-3 rounded-[18px] bg-[#2a2a2a] px-4 py-3.5 text-[14px] text-[#cfcfcf] transition-colors hover:text-white"
+            className="hit-area relative flex min-h-11 items-center gap-3 rounded-[18px] bg-[#2a2a2a] px-4 py-3.5 text-[14px] text-[#cfcfcf] transition-colors hover:text-white"
           >
             <Mail
               className="size-[22px] shrink-0 text-[#9a9a9a]"
@@ -148,7 +156,7 @@ function ContactSection() {
         <li>
           <a
             href={profile.phoneHref}
-            className="flex items-center gap-3 rounded-[18px] bg-[#2a2a2a] px-4 py-3.5 text-[14px] text-[#cfcfcf] transition-colors hover:text-white"
+            className="hit-area relative flex min-h-11 items-center gap-3 rounded-[18px] bg-[#2a2a2a] px-4 py-3.5 text-[14px] text-[#cfcfcf] transition-colors hover:text-white"
           >
             <Phone
               className="size-[22px] shrink-0 text-[#9a9a9a]"
@@ -158,7 +166,7 @@ function ContactSection() {
             <span>{profile.phone}</span>
           </a>
         </li>
-        <li className="flex items-center gap-3 rounded-[18px] bg-[#2a2a2a] px-4 py-3.5 text-[14px] text-[#cfcfcf]">
+        <li className="flex min-h-11 items-center gap-3 rounded-[18px] bg-[#2a2a2a] px-4 py-3.5 text-[14px] text-[#cfcfcf]">
           <MapPin
             className="size-[22px] shrink-0 text-[#9a9a9a]"
             strokeWidth={1.75}

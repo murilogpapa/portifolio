@@ -161,9 +161,11 @@ export function SkillsCarousel({ variant }: { variant: "desktop" | "mobile" }) {
           type="button"
           onClick={() => go(-1)}
           aria-label="Skills anteriores"
-          className="absolute left-0 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#0e0e0e]/75 text-white transition-colors hover:text-accent"
+          className="hit-area absolute left-0 top-1/2 z-20 flex h-12 w-12 min-h-11 min-w-11 -translate-y-1/2 items-center justify-center bg-transparent p-1 text-white transition-colors hover:text-accent"
         >
-          <ChevronLeft className="size-7" strokeWidth={2.2} aria-hidden="true" />
+          <span className="pointer-events-none flex h-10 w-10 items-center justify-center rounded-full bg-[#0e0e0e]/75">
+            <ChevronLeft className="size-7" strokeWidth={2.2} aria-hidden="true" />
+          </span>
         </button>
 
         <div className="skills-viewport relative mx-11 min-h-[16rem] flex-1 md:mx-12 md:h-full md:min-h-0 md:flex-none">
@@ -237,9 +239,11 @@ export function SkillsCarousel({ variant }: { variant: "desktop" | "mobile" }) {
           type="button"
           onClick={() => go(1)}
           aria-label="Próximas skills"
-          className="absolute right-0 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#0e0e0e]/75 text-white transition-colors hover:text-accent"
+          className="hit-area absolute right-0 top-1/2 z-20 flex h-12 w-12 min-h-11 min-w-11 -translate-y-1/2 items-center justify-center bg-transparent p-1 text-white transition-colors hover:text-accent"
         >
-          <ChevronRight className="size-7" strokeWidth={2.2} aria-hidden="true" />
+          <span className="pointer-events-none flex h-10 w-10 items-center justify-center rounded-full bg-[#0e0e0e]/75">
+            <ChevronRight className="size-7" strokeWidth={2.2} aria-hidden="true" />
+          </span>
         </button>
       </div>
     </section>
