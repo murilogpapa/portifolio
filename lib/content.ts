@@ -1,6 +1,6 @@
 export const aboutParagraphs = [
   "Meu nome é Murilo, tenho 20 anos e nasci e cresci em São Paulo. Sempre aprendi tecnologia na prática: testando, errando e pesquisando por conta própria. No ensino médio me formei Técnico em IoT no Senac e ainda passei por projetos de empreendedorismo e robótica. Comecei Ciência da Computação, mas o que me move é construir software de verdade, então migrei pra ADS no Senac Santo Amaro, com foco em desenvolvimento web.",
-  "Hoje busco estágio em desenvolvimento (front ou full-stack) e no tempo livre entrego produtos reais: o UGest, SaaS em Next.js e TypeScript pra médicos plantonistas (produto e código); o Ordem Files, plataforma web pra organizar campanhas com amigos; e o Painel #3D MUC, estoque de filamento, consignação e cálculo de custo. Também tenho base em design (Figma/Photoshop) de quando freelanciei com design e vídeo.",
+  "Hoje busco estágio em desenvolvimento (front ou full-stack) e no tempo livre entrego produtos reais: o UGest, SaaS em Next.js e TypeScript pra médicos plantonistas (produto e código), o Ordem Files, plataforma web pra organizar campanhas com amigos e o Painel de controle pra impressão 3D, estoque de filamento, consignação e cálculo de custo. Também tenho base em design (Figma/Photoshop) de quando freelanciei com design e vídeo.",
 ] as const;
 
 export const learningItems = [
@@ -79,12 +79,12 @@ export const projects = [
     back: "Ordem Files é uma plataforma web para organizar campanhas de RPG paranormal. Reúne fichas completas (dossiê, perícias, inventário, poderes, documentos), evidências, protocolos, mapa da sessão, escudo do mestre, notas e arquivos, com papéis de Mestre e Agente e controle de permissões. Visual escuro, estilo arquivo investigativo, com acentos neon.",
   },
   {
-    id: "painel-3d-muc",
+    id: "painel-controle-impressao-3d",
     kind: "flip" as const,
-    title: "Painel #3D MUC",
+    title: "Painel de controle impressão 3D",
     summary: "estoque · filamento · consignação",
     stack: ["Web"],
-    back: "Painel admin pra operação de impressão 3D: produtos e lotes de entrada com custo, filamentos e estoque interno, lojas parceiras, consignação, solicitações, fila de produção e calculadora de custo/gasto. Feito pra acompanhar produção e consignação sem planilha solta.",
+    back: "Painel de controle impressão 3D: produtos e lotes de entrada com custo, filamentos e estoque interno, lojas parceiras, consignação, solicitações, fila de produção e calculadora de custo/gasto. Feito pra acompanhar produção e consignação sem planilha solta.",
   },
 ] as const;
 

@@ -32,7 +32,7 @@ export function MainCard({ variant, section, nav }: MainCardProps) {
       return;
     }
     const card = new URLSearchParams(window.location.search).get("flip");
-    if (card === "ordem-files" || card === "painel-3d-muc") {
+    if (card === "ordem-files" || card === "painel-controle-impressao-3d") {
       setOpenProjectId(card);
     }
   }, [section]);
