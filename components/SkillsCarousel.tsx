@@ -7,7 +7,7 @@ import { SkillLogo } from "@/components/SkillLogo";
 import { skillList, type Skill, type SkillLevel } from "@/lib/content";
 
 const DESKTOP_VISIBLE = 4;
-const DESKTOP_GAP = 16;
+const DESKTOP_GAP = 0;
 const MOBILE_PER_PAGE = 4;
 
 function chunk<T>(items: readonly T[], size: number): T[][] {
@@ -180,19 +180,19 @@ export function SkillsCarousel() {
   return (
     <section className="mt-5 flex min-h-0 flex-1 flex-col md:mt-10 md:flex-none">
       <SectionTitle compact>Skills</SectionTitle>
-      <div className="relative mt-5 flex min-h-[16rem] flex-1 flex-col md:mt-6 md:h-[168px] md:min-h-[168px] md:flex-none">
+      <div className="relative mt-5 flex min-h-[16rem] flex-1 flex-col md:mt-6 md:h-[192px] md:min-h-[192px] md:flex-none">
         <button
           type="button"
           onClick={() => go(-1)}
           aria-label="Skills anteriores"
-          className="absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#0e0e0e]/75 text-white transition-colors hover:text-accent"
+          className="absolute left-0 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#0e0e0e]/75 text-white transition-colors hover:text-accent"
         >
           <ChevronLeft className="size-7" strokeWidth={2.2} aria-hidden="true" />
         </button>
 
         <div
           ref={viewportRef}
-          className="relative mx-11 min-h-[16rem] flex-1 overflow-hidden md:mx-12 md:h-[168px] md:min-h-[168px] md:flex-none"
+          className="skills-viewport relative mx-11 min-h-[16rem] flex-1 md:mx-12 md:h-full md:min-h-0 md:flex-none"
         >
           {isDesktop ? (
             <ul
@@ -209,7 +209,9 @@ export function SkillsCarousel() {
                 return (
                   <li
                     key={cardKey}
-                    className={`h-full shrink-0 ${openKey === cardKey ? "z-10" : "z-0"}`}
+                    className={`skills-slot h-full shrink-0 px-2 py-3 ${
+                      openKey === cardKey ? "is-open" : ""
+                    }`}
                     style={{ width: cardW > 0 ? cardW : undefined, flexBasis: cardW || undefined }}
                   >
                     <SkillCard
@@ -234,7 +236,7 @@ export function SkillsCarousel() {
               {mobileTrack.map((page, pageIndex) => (
                 <ul
                   key={`page-${pageIndex}`}
-                  className="grid h-full shrink-0 grid-cols-2 grid-rows-2 gap-3"
+                  className="grid h-full shrink-0 grid-cols-2 grid-rows-2 gap-0"
                   style={{ width: viewportW > 0 ? viewportW : "100%" }}
                 >
                   {page.map((skill, slot) => {
@@ -242,7 +244,9 @@ export function SkillsCarousel() {
                     return (
                       <li
                         key={cardKey}
-                        className={`min-h-0 ${openKey === cardKey ? "z-10" : "z-0"}`}
+                        className={`skills-slot min-h-0 p-2 ${
+                          openKey === cardKey ? "is-open" : ""
+                        }`}
                       >
                         <SkillCard
                           skill={skill}
@@ -264,7 +268,7 @@ export function SkillsCarousel() {
           type="button"
           onClick={() => go(1)}
           aria-label="Próximas skills"
-          className="absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#0e0e0e]/75 text-white transition-colors hover:text-accent"
+          className="absolute right-0 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#0e0e0e]/75 text-white transition-colors hover:text-accent"
         >
           <ChevronRight className="size-7" strokeWidth={2.2} aria-hidden="true" />
         </button>
