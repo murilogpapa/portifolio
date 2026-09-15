@@ -1,3 +1,4 @@
+import { Sparkles } from "lucide-react";
 import {
   siC,
   siCss,
@@ -57,6 +58,8 @@ export function SkillLogo({ id, label }: SkillLogoProps) {
       return <Si icon={siSwift} />;
     case "git":
       return <Si icon={siGit} />;
+    case "ia":
+      return <AiMark />;
     default: {
       const _exhaustive: never = id;
       return <span className="sr-only">{label ?? _exhaustive}</span>;
@@ -119,6 +122,22 @@ function FigmaMark() {
       <path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5Z" />
       <path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5Z" />
     </svg>
+  );
+}
+
+function AiMark() {
+  return (
+    <span className="flex flex-col items-center">
+      <Sparkles
+        className="h-[52px] w-[52px] text-[#c4b5fd] md:h-[58px] md:w-[58px]"
+        strokeWidth={1.5}
+        fill="currentColor"
+        aria-hidden="true"
+      />
+      <span className="mt-1.5 select-none text-[12px] font-semibold tracking-[0.18em] text-white md:text-[13px]">
+        IA
+      </span>
+    </span>
   );
 }
 

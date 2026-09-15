@@ -284,7 +284,11 @@ function SkillCard({
       type="button"
       data-skill-card={cardKey}
       aria-expanded={open}
-      aria-label={`${skill.label}, nível ${skill.level}`}
+      aria-label={
+        skill.tools?.length
+          ? `${skill.label}: ${skill.tools.join(", ")}`
+          : `${skill.label}, nível ${skill.level}`
+      }
       onClick={onToggle}
       className={`skill-scene h-full w-full cursor-pointer border-0 bg-transparent p-0 ${open ? "is-open" : ""}`}
     >
@@ -298,10 +302,20 @@ function SkillCard({
           <span className="text-[14px] font-semibold leading-tight text-white md:text-[15px]">
             {skill.label}
           </span>
-          <span className="mt-1 text-[12px] leading-tight text-[#c8c8c8]">
-            {skill.level}
-          </span>
-          <LevelDots level={skill.level} />
+          {skill.tools?.length ? (
+            <ul className="mt-1.5 flex w-full min-w-0 flex-col items-center gap-0.5 text-[11px] leading-snug text-[#c8c8c8] md:text-[12px]">
+              {skill.tools.map((tool) => (
+                <li key={tool}>{tool}</li>
+              ))}
+            </ul>
+          ) : skill.level ? (
+            <>
+              <span className="mt-1 text-[12px] leading-tight text-[#c8c8c8]">
+                {skill.level}
+              </span>
+              <LevelDots level={skill.level} />
+            </>
+          ) : null}
         </div>
       </div>
     </button>

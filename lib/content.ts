@@ -108,7 +108,8 @@ export type SkillId =
   | "figma"
   | "photoshop"
   | "swift"
-  | "git";
+  | "git"
+  | "ia";
 
 export type SkillLevel = "Básico" | "Intermediário" | "Avançado";
 
@@ -116,7 +117,8 @@ export const skillList: {
   id: SkillId;
   label: string;
   bg: string;
-  level: SkillLevel;
+  level?: SkillLevel;
+  tools?: readonly string[];
 }[] = [
   { id: "html", label: "HTML", bg: "bg-[#2a1810]", level: "Intermediário" },
   { id: "css", label: "CSS", bg: "bg-[#10182a]", level: "Intermediário" },
@@ -144,6 +146,12 @@ export const skillList: {
   },
   { id: "swift", label: "Swift", bg: "bg-[#2a1410]", level: "Básico" },
   { id: "git", label: "Git", bg: "bg-[#241410]", level: "Básico" },
+  {
+    id: "ia",
+    label: "IA",
+    bg: "bg-[#16122a]",
+    tools: ["Claude", "Gemini / Antigravity", "Grok"],
+  },
 ];
 
 export type Skill = (typeof skillList)[number];
