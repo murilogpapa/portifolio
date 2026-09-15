@@ -1,6 +1,6 @@
 export const aboutParagraphs = [
-  "Meu nome é Murilo, nasci e cresci em São Paulo. Desde pequeno fui apaixonado por tecnologia, o tipo que aprende testando, errando e pesquisando por conta própria. No ensino médio profissionalizei isso no técnico em IoT. Depois fui pra Ciência da Computação, mas o que me brilha os olhos é aplicação prática: aprender construindo. Por isso migrei pra ADS no Senac, com foco em software de verdade.",
-  "No tempo livre construo apps web pra problemas reais. Um deles é o Ordem Files, plataforma web que fiz pra organizar campanhas com amigos (fichas, arquivos e ferramentas de sessão). Outro é o Painel #3D MUC, que controla estoque de filamento, consignação em lojas parceiras e calcula gasto e custo. Também tenho o UGest, SaaS em Next.js e TypeScript pra médicos plantonistas, onde cuido de produto e código.",
+  "Meu nome é Murilo, tenho 20 anos e nasci e cresci em São Paulo. Sempre aprendi tecnologia na prática: testando, errando e pesquisando por conta própria. No ensino médio me formei Técnico em IoT no Senac e ainda passei por projetos de empreendedorismo e robótica. Comecei Ciência da Computação, mas o que me move é construir software de verdade, então migrei pra ADS no Senac Santo Amaro, com foco em desenvolvimento web.",
+  "Hoje busco estágio em desenvolvimento (front ou full-stack) e no tempo livre entrego produtos reais: o UGest, SaaS em Next.js e TypeScript pra médicos plantonistas (produto e código); o Ordem Files, plataforma web pra organizar campanhas com amigos; e o Painel #3D MUC, estoque de filamento, consignação e cálculo de custo. Também tenho base em design (Figma/Photoshop) de quando freelanciei com design e vídeo.",
 ] as const;
 
 export const learningItems = [
@@ -75,21 +75,40 @@ export type SkillId =
   | "react"
   | "next"
   | "tailwind"
+  | "vite"
   | "python"
   | "sql"
+  | "java"
+  | "c"
   | "figma"
-  | "photoshop";
+  | "photoshop"
+  | "swift"
+  | "git";
 
-export const skillList: { id: SkillId; label: string; bg: string }[] = [
-  { id: "html", label: "HTML", bg: "bg-[#2a1810]" },
-  { id: "css", label: "CSS", bg: "bg-[#10182a]" },
-  { id: "js", label: "JavaScript", bg: "bg-[#2a2610]" },
-  { id: "ts", label: "TypeScript", bg: "bg-[#0f1c2e]" },
-  { id: "react", label: "React", bg: "bg-[#141414]" },
-  { id: "next", label: "Next.js", bg: "bg-[#111111]" },
-  { id: "tailwind", label: "Tailwind CSS", bg: "bg-[#0b1220]" },
-  { id: "python", label: "Python", bg: "bg-[#1a2430]" },
-  { id: "sql", label: "SQL", bg: "bg-[#2a2410]" },
-  { id: "figma", label: "Figma", bg: "bg-[#2a2a2a]" },
-  { id: "photoshop", label: "Photoshop", bg: "bg-[#001e36]" },
+export type SkillLevel = "Básico" | "Intermediário" | "Avançado";
+
+export const skillList: {
+  id: SkillId;
+  label: string;
+  bg: string;
+  level: SkillLevel;
+}[] = [
+  { id: "html", label: "HTML", bg: "bg-[#2a1810]", level: "Intermediário" },
+  { id: "css", label: "CSS", bg: "bg-[#10182a]", level: "Intermediário" },
+  { id: "js", label: "JavaScript", bg: "bg-[#2a2610]", level: "Intermediário" },
+  { id: "ts", label: "TypeScript", bg: "bg-[#0f1c2e]", level: "Intermediário" },
+  { id: "react", label: "React", bg: "bg-[#141414]", level: "Intermediário" },
+  { id: "next", label: "Next.js", bg: "bg-[#111111]", level: "Intermediário" },
+  { id: "tailwind", label: "Tailwind", bg: "bg-[#0b1220]", level: "Intermediário" },
+  { id: "vite", label: "Vite", bg: "bg-[#1a1228]", level: "Básico" },
+  { id: "python", label: "Python", bg: "bg-[#1a2430]", level: "Básico" },
+  { id: "sql", label: "SQL", bg: "bg-[#2a2410]", level: "Básico" },
+  { id: "java", label: "Java", bg: "bg-[#1a140e]", level: "Básico" },
+  { id: "c", label: "C", bg: "bg-[#101820]", level: "Básico" },
+  { id: "figma", label: "Figma", bg: "bg-[#2a2a2a]", level: "Intermediário" },
+  { id: "photoshop", label: "Photoshop", bg: "bg-[#001e36]", level: "Intermediário" },
+  { id: "swift", label: "Swift", bg: "bg-[#2a1410]", level: "Básico" },
+  { id: "git", label: "Git", bg: "bg-[#241410]", level: "Intermediário" },
 ];
+
+export type Skill = (typeof skillList)[number];

@@ -1,8 +1,17 @@
 import {
+  siC,
+  siCss,
+  siGit,
+  siHtml5,
+  siJavascript,
   siNextdotjs,
   siReact,
+  siSwift,
   siTailwindcss,
+  siTypescript,
+  siVite,
 } from "simple-icons";
+import type { SimpleIcon } from "simple-icons";
 import { BrandIcon } from "@/components/BrandIcon";
 import type { SkillId } from "@/lib/content";
 
@@ -11,53 +20,60 @@ type SkillLogoProps = {
   label: string;
 };
 
+const ICON = "h-[58px] w-[58px] md:h-[64px] md:w-[64px]";
+const ICON_LG = "h-[68px] w-[68px] md:h-[74px] md:w-[74px]";
+
 export function SkillLogo({ id, label }: SkillLogoProps) {
   switch (id) {
     case "html":
-      return <TypeMark label="HTML" color="#E44D26" size="text-[28px] md:text-[32px]" />;
+      return <Si icon={siHtml5} />;
     case "css":
-      return <TypeMark label="CSS" color="#1572B6" size="text-[28px] md:text-[32px]" />;
+      return <Si icon={siCss} />;
     case "js":
-      return <TypeMark label="JS" color="#F7DF1E" size="text-[34px] md:text-[38px]" />;
+      return <Si icon={siJavascript} />;
     case "ts":
-      return <TypeMark label="TS" color="#3178C6" size="text-[34px] md:text-[38px]" />;
-    case "sql":
-      return <TypeMark label="SQL" color="#F2C94C" size="text-[28px] md:text-[32px]" />;
-    case "photoshop":
-      return <TypeMark label="Ps" color="#31A8FF" size="text-[40px] md:text-[44px]" />;
+      return <Si icon={siTypescript} />;
     case "react":
-      return (
-        <BrandIcon
-          icon={siReact}
-          fill={`#${siReact.hex}`}
-          className="h-[72px] w-[72px] md:h-[78px] md:w-[78px]"
-        />
-      );
+      return <Si icon={siReact} className={ICON_LG} />;
     case "next":
-      return (
-        <BrandIcon
-          icon={siNextdotjs}
-          fill="#f5f5f5"
-          className="h-[68px] w-[68px] md:h-[74px] md:w-[74px]"
-        />
-      );
+      return <Si icon={siNextdotjs} fill="#f5f5f5" className={ICON_LG} />;
     case "tailwind":
-      return (
-        <BrandIcon
-          icon={siTailwindcss}
-          fill={`#${siTailwindcss.hex}`}
-          className="h-[58px] w-[58px] md:h-[64px] md:w-[64px]"
-        />
-      );
+      return <Si icon={siTailwindcss} />;
+    case "vite":
+      return <Si icon={siVite} />;
     case "python":
       return <PythonMark />;
+    case "sql":
+      return <TypeMark label="SQL" color="#F2C94C" size="text-[28px] md:text-[32px]" />;
+    case "java":
+      return <TypeMark label="Java" color="#E76F00" size="text-[28px] md:text-[32px]" />;
+    case "c":
+      return <Si icon={siC} className={ICON_LG} />;
     case "figma":
       return <FigmaMark />;
+    case "photoshop":
+      return <TypeMark label="Ps" color="#31A8FF" size="text-[40px] md:text-[44px]" />;
+    case "swift":
+      return <Si icon={siSwift} />;
+    case "git":
+      return <Si icon={siGit} />;
     default: {
       const _exhaustive: never = id;
       return <span className="sr-only">{label ?? _exhaustive}</span>;
     }
   }
+}
+
+function Si({
+  icon,
+  fill,
+  className = ICON,
+}: {
+  icon: SimpleIcon;
+  fill?: string;
+  className?: string;
+}) {
+  return <BrandIcon icon={icon} fill={fill ?? `#${icon.hex}`} className={className} />;
 }
 
 function TypeMark({

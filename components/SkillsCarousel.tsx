@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { SectionTitle } from "@/components/SectionTitle";
 import { SkillLogo } from "@/components/SkillLogo";
-import { skillList } from "@/lib/content";
+import { skillList, type Skill, type SkillLevel } from "@/lib/content";
 
 const DESKTOP_VISIBLE = 4;
 const DESKTOP_GAP = 16;
@@ -18,6 +18,12 @@ function chunk<T>(items: readonly T[], size: number): T[][] {
   return pages;
 }
 
+function levelFill(level: SkillLevel): number {
+  if (level === "Básico") return 1;
+  if (level === "Intermediário") return 2;
+  return 3;
+}
+
 export function SkillsCarousel() {
   const viewportRef = useRef<HTMLDivElement>(null);
   const [viewportW, setViewportW] = useState(0);
@@ -26,6 +32,7 @@ export function SkillsCarousel() {
   const [index, setIndex] = useState(0);
   const [instant, setInstant] = useState(false);
   const [locked, setLocked] = useState(false);
+  const [openKey, setOpenKey] = useState<string | null>(null);
 
   const pages = useMemo(() => chunk(skillList, MOBILE_PER_PAGE), []);
   const pageCount = pages.length;
@@ -104,8 +111,27 @@ export function SkillsCarousel() {
     return () => window.clearTimeout(timeout);
   }, [locked, index]);
 
+  useEffect(() => {
+    if (!openKey) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpenKey(null);
+    };
+    const onPointer = (event: PointerEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest("[data-skill-card]")) return;
+      setOpenKey(null);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointer);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+    };
+  }, [openKey]);
+
   const go = useCallback(
     (dir: 1 | -1) => {
+      setOpenKey(null);
       if (locked && !reduced) return;
       if (reduced) {
         if (isDesktop) {
@@ -147,6 +173,10 @@ export function SkillsCarousel() {
 
   const animate = !reduced && !instant && viewportW > 0;
 
+  const toggle = (key: string) => {
+    setOpenKey((current) => (current === key ? null : key));
+  };
+
   return (
     <section className="mt-5 flex min-h-0 flex-1 flex-col md:mt-10 md:flex-none">
       <SectionTitle compact>Skills</SectionTitle>
@@ -174,16 +204,24 @@ export function SkillsCarousel() {
               }}
               onTransitionEnd={onTransitionEnd}
             >
-              {desktopTrack.map((skill, slot) => (
-                <li
-                  key={`${skill.id}-d-${slot}`}
-                  className={`flex h-full shrink-0 items-center justify-center rounded-[24px] ${skill.bg}`}
-                  style={{ width: cardW > 0 ? cardW : undefined, flexBasis: cardW || undefined }}
-                >
-                  <span className="sr-only">{skill.label}</span>
-                  <SkillLogo id={skill.id} label={skill.label} />
-                </li>
-              ))}
+              {desktopTrack.map((skill, slot) => {
+                const cardKey = `${skill.id}-d-${slot}`;
+                return (
+                  <li
+                    key={cardKey}
+                    className={`h-full shrink-0 ${openKey === cardKey ? "z-10" : "z-0"}`}
+                    style={{ width: cardW > 0 ? cardW : undefined, flexBasis: cardW || undefined }}
+                  >
+                    <SkillCard
+                      skill={skill}
+                      cardKey={cardKey}
+                      open={openKey === cardKey}
+                      roundedClass="rounded-[24px]"
+                      onToggle={() => toggle(cardKey)}
+                    />
+                  </li>
+                );
+              })}
             </ul>
           ) : (
             <div
@@ -199,15 +237,23 @@ export function SkillsCarousel() {
                   className="grid h-full shrink-0 grid-cols-2 grid-rows-2 gap-3"
                   style={{ width: viewportW > 0 ? viewportW : "100%" }}
                 >
-                  {page.map((skill, slot) => (
-                    <li
-                      key={`${skill.id}-m-${pageIndex}-${slot}`}
-                      className={`flex min-h-0 items-center justify-center rounded-[22px] ${skill.bg}`}
-                    >
-                      <span className="sr-only">{skill.label}</span>
-                      <SkillLogo id={skill.id} label={skill.label} />
-                    </li>
-                  ))}
+                  {page.map((skill, slot) => {
+                    const cardKey = `${skill.id}-m-${pageIndex}-${slot}`;
+                    return (
+                      <li
+                        key={cardKey}
+                        className={`min-h-0 ${openKey === cardKey ? "z-10" : "z-0"}`}
+                      >
+                        <SkillCard
+                          skill={skill}
+                          cardKey={cardKey}
+                          open={openKey === cardKey}
+                          roundedClass="rounded-[22px]"
+                          onToggle={() => toggle(cardKey)}
+                        />
+                      </li>
+                    );
+                  })}
                 </ul>
               ))}
             </div>
@@ -224,5 +270,63 @@ export function SkillsCarousel() {
         </button>
       </div>
     </section>
+  );
+}
+
+function SkillCard({
+  skill,
+  cardKey,
+  open,
+  roundedClass,
+  onToggle,
+}: {
+  skill: Skill;
+  cardKey: string;
+  open: boolean;
+  roundedClass: string;
+  onToggle: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      data-skill-card={cardKey}
+      aria-expanded={open}
+      aria-label={`${skill.label}, nível ${skill.level}`}
+      onClick={onToggle}
+      className={`skill-scene h-full w-full cursor-pointer border-0 bg-transparent p-0 ${open ? "is-open" : ""}`}
+    >
+      <div className={`skill-inner h-full w-full ${open ? "is-flipped" : ""}`}>
+        <div
+          className={`skill-face skill-front ${roundedClass} ${skill.bg}`}
+        >
+          <SkillLogo id={skill.id} label={skill.label} />
+        </div>
+        <div className={`skill-face skill-back ${roundedClass} ${skill.bg}`}>
+          <span className="text-[14px] font-semibold leading-tight text-white md:text-[15px]">
+            {skill.label}
+          </span>
+          <span className="mt-1 text-[12px] leading-tight text-[#c8c8c8]">
+            {skill.level}
+          </span>
+          <LevelDots level={skill.level} />
+        </div>
+      </div>
+    </button>
+  );
+}
+
+function LevelDots({ level }: { level: SkillLevel }) {
+  const filled = levelFill(level);
+  return (
+    <span className="mt-2.5 flex items-center gap-1.5" aria-hidden="true">
+      {[1, 2, 3].map((n) => (
+        <span
+          key={n}
+          className={`h-1.5 w-1.5 rounded-full ${
+            n <= filled ? "bg-white" : "bg-white/15"
+          }`}
+        />
+      ))}
+    </span>
   );
 }
