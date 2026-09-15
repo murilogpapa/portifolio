@@ -45,9 +45,9 @@ export function Nav({ variant, section, onChange }: NavProps) {
                   onClick={() => onChange(item.id)}
                   aria-label={item.label}
                   aria-current={active ? "page" : undefined}
-                  className={`flex h-11 w-11 items-center justify-center rounded-xl transition-colors ${
-                    active ? "text-accent" : "text-[#8d8d8d] hover:text-white"
-                  }`}
+                  data-nav={item.id}
+                  suppressHydrationWarning
+                  className="nav-link flex h-11 w-11 items-center justify-center rounded-xl text-[#8d8d8d] transition-colors hover:text-white"
                 >
                   <Icon className="size-6" strokeWidth={1.75} aria-hidden="true" />
                 </button>
@@ -73,9 +73,9 @@ export function Nav({ variant, section, onChange }: NavProps) {
                 type="button"
                 onClick={() => onChange(item.id)}
                 aria-current={active ? "page" : undefined}
-                className={`text-[15px] font-medium tracking-tight transition-colors ${
-                  active ? "text-accent" : "text-[#c8c8c8] hover:text-white"
-                }`}
+                data-nav={item.id}
+                suppressHydrationWarning
+                className="nav-link text-[15px] font-medium tracking-tight text-[#c8c8c8] transition-colors hover:text-white"
               >
                 {item.label}
               </button>

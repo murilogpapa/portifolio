@@ -18,11 +18,12 @@ const titles: Record<SectionId, string> = {
 };
 
 type MainCardProps = {
+  variant: "desktop" | "mobile";
   section: SectionId;
   nav?: ReactNode;
 };
 
-export function MainCard({ section, nav }: MainCardProps) {
+export function MainCard({ variant, section, nav }: MainCardProps) {
   const [openProjectId, setOpenProjectId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -46,7 +47,13 @@ export function MainCard({ section, nav }: MainCardProps) {
     >
       <div className="flex shrink-0 items-start justify-between">
         <div className={`px-5 pt-5 md:px-8 ${nav ? "md:pt-[18px]" : "md:pt-6"}`}>
-          <SectionTitle>{titles[section]}</SectionTitle>
+          {(Object.entries(titles) as [SectionId, string][]).map(
+            ([id, label]) => (
+              <div key={id} className="section-title" data-panel={id}>
+                <SectionTitle>{label}</SectionTitle>
+              </div>
+            ),
+          )}
         </div>
         {nav}
       </div>
@@ -56,22 +63,28 @@ export function MainCard({ section, nav }: MainCardProps) {
           flipping ? "overflow-x-hidden md:overflow-visible" : "overflow-x-hidden"
         }`}
       >
-        {section === "sobre" ? <AboutSection /> : null}
-        {section === "aprendizado" ? <LearningSection /> : null}
-        {section === "portfolio" ? (
+        <div className="section-panel" data-panel="sobre">
+          <AboutSection variant={variant} />
+        </div>
+        <div className="section-panel" data-panel="aprendizado">
+          <LearningSection />
+        </div>
+        <div className="section-panel" data-panel="portfolio">
           <PortfolioSection
             openId={openProjectId}
             onOpen={setOpenProjectId}
             onClose={() => setOpenProjectId(null)}
           />
-        ) : null}
-        {section === "contato" ? <ContactSection /> : null}
+        </div>
+        <div className="section-panel" data-panel="contato">
+          <ContactSection />
+        </div>
       </div>
     </article>
   );
 }
 
-function AboutSection() {
+function AboutSection({ variant }: { variant: "desktop" | "mobile" }) {
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="mt-4 flex w-full min-w-0 max-w-full flex-col gap-6 text-[14.5px] leading-[1.7] break-words text-[#d0d0d0] md:max-w-3xl md:text-[15px] md:leading-[1.75]">
@@ -81,7 +94,7 @@ function AboutSection() {
           </p>
         ))}
       </div>
-      <SkillsCarousel />
+      <SkillsCarousel variant={variant} />
     </div>
   );
 }

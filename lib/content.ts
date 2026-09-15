@@ -18,9 +18,24 @@ export const learningItems = [
     status: "Cursando",
   },
   {
-    id: "assistentes",
-    title: "Assistentes Senac Nações Unidas",
-    place: "Senac · concluído 2022-2024",
+    id: "assistente-apps",
+    title: "Assistente de Desenvolvimento de Aplicativos para IoT",
+    place:
+      "Senac Nações Unidas · Internet das Coisas (IoT) · 01/2022-12/2024",
+    status: "Formação complementar",
+  },
+  {
+    id: "assistente-suporte",
+    title: "Assistente de Suporte e Manutenção de Computadores e IoT",
+    place:
+      "Senac Nações Unidas · Internet das Coisas (IoT) · 01/2022-12/2024",
+    status: "Formação complementar",
+  },
+  {
+    id: "assistente-automacao",
+    title: "Assistente de Suporte em Automação IoT",
+    place:
+      "Senac Nações Unidas · Internet das Coisas (IoT) · 01/2022-12/2024",
     status: "Formação complementar",
   },
   {

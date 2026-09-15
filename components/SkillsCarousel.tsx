@@ -1,13 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { SectionTitle } from "@/components/SectionTitle";
 import { SkillLogo } from "@/components/SkillLogo";
 import { skillList, type Skill, type SkillLevel } from "@/lib/content";
 
 const DESKTOP_VISIBLE = 4;
-const DESKTOP_GAP = 0;
 const MOBILE_PER_PAGE = 4;
 
 function chunk<T>(items: readonly T[], size: number): T[][] {
@@ -24,12 +23,10 @@ function levelFill(level: SkillLevel): number {
   return 3;
 }
 
-export function SkillsCarousel() {
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const [viewportW, setViewportW] = useState(0);
-  const [isDesktop, setIsDesktop] = useState(false);
+export function SkillsCarousel({ variant }: { variant: "desktop" | "mobile" }) {
+  const isDesktop = variant === "desktop";
   const [reduced, setReduced] = useState(false);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(isDesktop ? DESKTOP_VISIBLE : 1);
   const [instant, setInstant] = useState(false);
   const [locked, setLocked] = useState(false);
   const [openKey, setOpenKey] = useState<string | null>(null);
@@ -38,41 +35,12 @@ export function SkillsCarousel() {
   const pageCount = pages.length;
 
   useEffect(() => {
-    const desktopMq = window.matchMedia("(min-width: 768px)");
     const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => {
-      setIsDesktop(desktopMq.matches);
-      setReduced(motionMq.matches);
-    };
+    const sync = () => setReduced(motionMq.matches);
     sync();
-    desktopMq.addEventListener("change", sync);
     motionMq.addEventListener("change", sync);
-    return () => {
-      desktopMq.removeEventListener("change", sync);
-      motionMq.removeEventListener("change", sync);
-    };
+    return () => motionMq.removeEventListener("change", sync);
   }, []);
-
-  useEffect(() => {
-    const el = viewportRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => {
-      setViewportW(el.clientWidth);
-    });
-    ro.observe(el);
-    setViewportW(el.clientWidth);
-    return () => ro.disconnect();
-  }, []);
-
-  useEffect(() => {
-    setInstant(true);
-    setLocked(false);
-    if (reduced) {
-      setIndex(0);
-      return;
-    }
-    setIndex(isDesktop ? DESKTOP_VISIBLE : 1);
-  }, [isDesktop, reduced]);
 
   useEffect(() => {
     if (!instant) return;
@@ -82,28 +50,23 @@ export function SkillsCarousel() {
     return () => cancelAnimationFrame(id);
   }, [instant, index]);
 
-  const desktopTrack = useMemo(() => {
-    if (reduced) return [...skillList];
-    return [
+  const desktopTrack = useMemo(
+    () => [
       ...skillList.slice(-DESKTOP_VISIBLE),
       ...skillList,
       ...skillList.slice(0, DESKTOP_VISIBLE),
-    ];
-  }, [reduced]);
+    ],
+    [],
+  );
 
   const mobileTrack = useMemo(() => {
-    if (reduced || pageCount === 0) return pages;
+    if (pageCount === 0) return pages;
     return [pages[pageCount - 1], ...pages, pages[0]];
-  }, [pages, pageCount, reduced]);
-
-  const cardW =
-    viewportW > 0
-      ? (viewportW - DESKTOP_GAP * (DESKTOP_VISIBLE - 1)) / DESKTOP_VISIBLE
-      : 0;
+  }, [pages, pageCount]);
 
   const shift = isDesktop
-    ? index * (cardW + DESKTOP_GAP)
-    : index * viewportW;
+    ? `calc(-${index} * 25%)`
+    : `calc(-${index} * 100%)`;
 
   useEffect(() => {
     if (!locked) return;
@@ -134,10 +97,22 @@ export function SkillsCarousel() {
       setOpenKey(null);
       if (locked && !reduced) return;
       if (reduced) {
+        setInstant(true);
         if (isDesktop) {
-          setIndex((value) => (value + dir + skillList.length) % skillList.length);
+          const n = skillList.length;
+          setIndex((value) => {
+            let next = value + dir;
+            if (next >= n + DESKTOP_VISIBLE) return DESKTOP_VISIBLE;
+            if (next < DESKTOP_VISIBLE) return next + n;
+            return next;
+          });
         } else {
-          setIndex((value) => (value + dir + pageCount) % pageCount);
+          setIndex((value) => {
+            let next = value + dir;
+            if (next >= pageCount + 1) return 1;
+            if (next <= 0) return pageCount;
+            return next;
+          });
         }
         return;
       }
@@ -171,7 +146,7 @@ export function SkillsCarousel() {
     setLocked(false);
   };
 
-  const animate = !reduced && !instant && viewportW > 0;
+  const animate = !reduced && !instant;
 
   const toggle = (key: string) => {
     setOpenKey((current) => (current === key ? null : key));
@@ -190,18 +165,11 @@ export function SkillsCarousel() {
           <ChevronLeft className="size-7" strokeWidth={2.2} aria-hidden="true" />
         </button>
 
-        <div
-          ref={viewportRef}
-          className="skills-viewport relative mx-11 min-h-[16rem] flex-1 md:mx-12 md:h-full md:min-h-0 md:flex-none"
-        >
+        <div className="skills-viewport relative mx-11 min-h-[16rem] flex-1 md:mx-12 md:h-full md:min-h-0 md:flex-none">
           {isDesktop ? (
             <ul
-              className={`flex h-full ${animate ? "skills-track" : "skills-track is-instant"}`}
-              style={{
-                gap: DESKTOP_GAP,
-                transform:
-                  cardW > 0 ? `translateX(-${shift}px)` : "translateX(0)",
-              }}
+              className={`flex h-full w-full ${animate ? "skills-track" : "skills-track is-instant"}`}
+              style={{ transform: `translate3d(${shift}, 0, 0)` }}
               onTransitionEnd={onTransitionEnd}
             >
               {desktopTrack.map((skill, slot) => {
@@ -209,10 +177,10 @@ export function SkillsCarousel() {
                 return (
                   <li
                     key={cardKey}
-                    className={`skills-slot h-full shrink-0 px-2 py-3 ${
+                    className={`skills-slot h-full w-1/4 shrink-0 px-2 py-3 ${
                       openKey === cardKey ? "is-open" : ""
                     }`}
-                    style={{ width: cardW > 0 ? cardW : undefined, flexBasis: cardW || undefined }}
+                    style={{ flex: "0 0 25%" }}
                   >
                     <SkillCard
                       skill={skill}
@@ -227,17 +195,15 @@ export function SkillsCarousel() {
             </ul>
           ) : (
             <div
-              className={`absolute inset-y-0 left-0 flex h-full ${animate ? "skills-track" : "skills-track is-instant"}`}
-              style={{
-                transform: viewportW > 0 ? `translateX(-${shift}px)` : "translateX(0)",
-              }}
+              className={`absolute inset-0 flex h-full ${animate ? "skills-track" : "skills-track is-instant"}`}
+              style={{ transform: `translate3d(${shift}, 0, 0)` }}
               onTransitionEnd={onTransitionEnd}
             >
               {mobileTrack.map((page, pageIndex) => (
                 <ul
                   key={`page-${pageIndex}`}
-                  className="grid h-full shrink-0 grid-cols-2 grid-rows-2 gap-0"
-                  style={{ width: viewportW > 0 ? viewportW : "100%" }}
+                  className="grid h-full w-full shrink-0 grid-cols-2 grid-rows-2 gap-0"
+                  style={{ flex: "0 0 100%" }}
                 >
                   {page.map((skill, slot) => {
                     const cardKey = `${skill.id}-m-${pageIndex}-${slot}`;

@@ -19,10 +19,49 @@
   --font-sans: var(--font-inter);
 }
 
+html {
+  background: #0e0e0e;
+  color-scheme: dark;
+}
+
 html,
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+.section-title {
+  display: none;
+}
+
+.section-panel {
+  display: none;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+html[data-section="sobre"] .section-title[data-panel="sobre"],
+html[data-section="aprendizado"] .section-title[data-panel="aprendizado"],
+html[data-section="portfolio"] .section-title[data-panel="portfolio"],
+html[data-section="contato"] .section-title[data-panel="contato"] {
+  display: block;
+}
+
+html[data-section="sobre"] .section-panel[data-panel="sobre"],
+html[data-section="aprendizado"] .section-panel[data-panel="aprendizado"],
+html[data-section="portfolio"] .section-panel[data-panel="portfolio"],
+html[data-section="contato"] .section-panel[data-panel="contato"] {
+  display: flex;
+}
+
+html[data-section="sobre"] .nav-link[data-nav="sobre"],
+html[data-section="aprendizado"] .nav-link[data-nav="aprendizado"],
+html[data-section="portfolio"] .nav-link[data-nav="portfolio"],
+html[data-section="contato"] .nav-link[data-nav="contato"] {
+  color: var(--accent);
 }
 
 body {
