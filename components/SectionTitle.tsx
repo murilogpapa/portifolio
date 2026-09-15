@@ -8,7 +8,7 @@ type SectionTitleProps = {
 export function SectionTitle({ children, compact = false }: SectionTitleProps) {
   return (
     <div>
-      <h2 className="text-[28px] font-bold leading-none tracking-tight text-white md:text-[30px]">
+      <h2 className="text-[28px] font-bold leading-none tracking-tight text-white md:whitespace-nowrap md:text-[32px]">
         {children}
       </h2>
       <div

@@ -53,7 +53,7 @@ export default function Home() {
         <MainCard variant="mobile" section={section} />
       </div>
 
-      <div className="mx-auto hidden min-h-dvh w-full max-w-[1520px] items-stretch gap-6 px-8 py-8 md:flex lg:gap-8 lg:px-12 xl:px-16">
+      <div className="mx-auto hidden w-full max-w-[1520px] items-stretch gap-6 px-8 py-8 md:flex lg:gap-8 lg:px-12 xl:px-16">
         <Sidebar />
         <MainCard
           variant="desktop"

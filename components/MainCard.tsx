@@ -41,12 +41,14 @@ export function MainCard({ variant, section, nav }: MainCardProps) {
 
   return (
     <article
-      className={`relative flex min-h-0 min-w-0 w-full flex-1 flex-col rounded-[24px] bg-card md:min-h-[640px] ${
+      className={`relative flex min-h-0 min-w-0 w-full flex-1 flex-col rounded-[24px] bg-card ${
         flipping ? "overflow-x-hidden md:overflow-visible" : "overflow-hidden"
       }`}
     >
       <div className="flex shrink-0 items-start justify-between">
-        <div className={`px-5 pt-5 md:px-8 ${nav ? "md:pt-[18px]" : "md:pt-6"}`}>
+        <div
+          className={`shrink-0 px-5 pt-5 md:px-8 ${nav ? "md:pt-5" : "md:pt-6"}`}
+        >
           {(Object.entries(titles) as [SectionId, string][]).map(
             ([id, label]) => (
               <div key={id} className="section-title" data-panel={id}>
@@ -59,7 +61,9 @@ export function MainCard({ variant, section, nav }: MainCardProps) {
       </div>
 
       <div
-        className={`flex w-full min-h-0 min-w-0 max-w-full flex-1 flex-col px-5 pb-5 md:px-8 md:pb-8 ${
+        className={`flex w-full min-h-0 min-w-0 max-w-full flex-col px-5 pb-5 md:px-8 md:pb-8 ${
+          variant === "mobile" ? "flex-1" : ""
+        } ${
           flipping ? "overflow-x-hidden md:overflow-visible" : "overflow-x-hidden"
         }`}
       >
@@ -86,8 +90,12 @@ export function MainCard({ variant, section, nav }: MainCardProps) {
 
 function AboutSection({ variant }: { variant: "desktop" | "mobile" }) {
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
-      <div className="mt-4 flex w-full min-w-0 max-w-full flex-col gap-6 text-[14.5px] leading-[1.7] break-words text-[#d0d0d0] md:max-w-3xl md:text-[15px] md:leading-[1.75]">
+    <div
+      className={
+        variant === "mobile" ? "flex min-h-0 flex-1 flex-col" : "flex flex-col"
+      }
+    >
+      <div className="mt-4 flex w-full min-w-0 max-w-full flex-col gap-6 text-[14.5px] font-semibold leading-[1.7] break-words text-[#d0d0d0] md:max-w-3xl md:text-[15px] md:leading-[1.75]">
         {aboutParagraphs.map((paragraph) => (
           <p key={paragraph} className="max-w-full">
             {paragraph}
@@ -120,7 +128,7 @@ function LearningSection() {
 function ContactSection() {
   return (
     <div className="mt-4 max-w-xl">
-      <p className="text-[14.5px] leading-[1.7] text-[#d0d0d0] md:text-[15px] md:leading-[1.75]">
+      <p className="text-[14.5px] font-semibold leading-[1.7] text-[#d0d0d0] md:text-[15px] md:leading-[1.75]">
         Me chama por e-mail, telefone, WhatsApp ou redes.
       </p>
       <ul className="mt-5 flex flex-col gap-3">

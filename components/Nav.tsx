@@ -62,9 +62,9 @@ export function Nav({ variant, section, onChange }: NavProps) {
   return (
     <nav
       aria-label="Seções"
-      className="rounded-bl-[24px] bg-nav px-8 py-[18px]"
+      className="min-w-0 rounded-bl-[24px] bg-nav px-5 py-5 lg:px-8 xl:w-1/2 xl:shrink-0 xl:px-12"
     >
-      <ul className="flex items-center gap-8">
+      <ul className="flex w-full items-center justify-evenly gap-2 lg:gap-4 xl:gap-8">
         {desktopItems.map((item) => {
           const active = item.id === section;
           return (
@@ -75,7 +75,7 @@ export function Nav({ variant, section, onChange }: NavProps) {
                 aria-current={active ? "page" : undefined}
                 data-nav={item.id}
                 suppressHydrationWarning
-                className="nav-link text-[15px] font-medium tracking-tight text-[#c8c8c8] transition-colors hover:text-white"
+                className="nav-link whitespace-nowrap text-[15px] font-semibold tracking-tight text-[#c8c8c8] transition-colors hover:text-white xl:text-[16px]"
               >
                 {item.label}
               </button>

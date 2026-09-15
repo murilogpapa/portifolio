@@ -5,7 +5,7 @@ import { profile } from "@/lib/profile";
 
 export function Sidebar() {
   return (
-    <aside className="flex w-[280px] shrink-0 flex-col items-center rounded-[24px] bg-card px-7 pb-8 pt-10 lg:w-[300px]">
+    <aside className="flex w-[280px] shrink-0 flex-col items-center self-stretch rounded-[24px] bg-card px-7 pb-8 pt-10 lg:w-[300px]">
       <Avatar size="sidebar" />
 
       <h1 className="mt-5 text-[34px] font-bold leading-none tracking-tight text-white">

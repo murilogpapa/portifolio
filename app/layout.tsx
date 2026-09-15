@@ -4,7 +4,8 @@ import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   adjustFontFallback: true,
 });
@@ -23,7 +24,9 @@ const sectionBootScript = `(function(){try{var h=location.hash.replace("#","");v
 
 const bootCss = `html,body{background:#0e0e0e;color:#f5f5f5;color-scheme:dark}
 .section-title{display:none}
-.section-panel{display:none;min-height:0;flex:1 1 auto;flex-direction:column;overflow-x:hidden;overflow-y:auto}
+.section-panel{display:none;min-height:0;flex-direction:column;overflow-x:hidden;overflow-y:auto}
+@media (max-width:767px){.section-panel{flex:1 1 auto}}
+@media (min-width:768px){.section-panel{flex:0 1 auto}}
 html[data-section="sobre"] .section-title[data-panel="sobre"],html[data-section="aprendizado"] .section-title[data-panel="aprendizado"],html[data-section="portfolio"] .section-title[data-panel="portfolio"],html[data-section="contato"] .section-title[data-panel="contato"]{display:block}
 html[data-section="sobre"] .section-panel[data-panel="sobre"],html[data-section="aprendizado"] .section-panel[data-panel="aprendizado"],html[data-section="portfolio"] .section-panel[data-panel="portfolio"],html[data-section="contato"] .section-panel[data-panel="contato"]{display:flex}
 html[data-section="sobre"] .nav-link[data-nav="sobre"],html[data-section="aprendizado"] .nav-link[data-nav="aprendizado"],html[data-section="portfolio"] .nav-link[data-nav="portfolio"],html[data-section="contato"] .nav-link[data-nav="contato"]{color:#3b82f6}`;
