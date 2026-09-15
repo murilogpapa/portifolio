@@ -7,25 +7,38 @@ export const learningItems = [
   {
     id: "iot",
     title: "Técnico em IoT",
-    place: "Senac",
+    place: "Senac · concluído 2022-2024",
     status: "Formação técnica",
   },
   {
     id: "ads",
     title: "Análise e Desenvolvimento de Sistemas",
-    place: "Senac",
+    place:
+      "Senac Santo Amaro · início jan/2026 · previsão meados de 2028 (curso 2,5 anos)",
     status: "Cursando",
+  },
+  {
+    id: "assistentes",
+    title: "Assistentes Senac Nações Unidas",
+    place: "Senac · concluído 2022-2024",
+    status: "Formação complementar",
   },
   {
     id: "empreenda",
     title: "Empreenda Senac",
     place: "Senac",
-    status: "Penúltima etapa",
+    status: "Participação",
   },
   {
     id: "robotica",
     title: "Campeonato de robótica Senac",
     place: "Senac",
+    status: "Participação",
+  },
+  {
+    id: "tic-trilhas",
+    title: "Tic em Trilhas · Apple / Swift",
+    place: "Apple Developer Academy / Tic em Trilhas",
     status: "Participação",
   },
   {
