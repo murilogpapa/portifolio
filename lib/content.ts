@@ -86,10 +86,30 @@ export const projects = [
     stack: ["Web"],
     back: "Painel de controle impressão 3D: produtos e lotes de entrada com custo, filamentos e estoque interno, lojas parceiras, consignação, solicitações, fila de produção e calculadora de custo/gasto. Feito pra acompanhar produção e consignação sem planilha solta.",
   },
+  {
+    id: "pi-bcc-1sem",
+    kind: "flip" as const,
+    title: "PI BCC · 1º semestre",
+    summary: "jogo web · p5.js · runner",
+    stack: ["p5.js", "JavaScript", "HTML"],
+    href: "https://github.com/murilogpapa/PI-bcc-1sem",
+    back: "Projeto Integrador do 1º semestre de Ciência da Computação: jogo web em p5.js. Runner infinito com robô, inimigo (raio), moedas, pulo (espaço ou toque), ciclo dia/noite com sol e lua em órbita, e dificuldade que sobe com o tempo. Game over ao colidir com o inimigo no chão.",
+  },
+  {
+    id: "rpg-tic-em-trilhas",
+    kind: "flip" as const,
+    title: "RPG Tic em Trilhas",
+    summary: "RPG de terminal · Swift · Midgard",
+    stack: ["Swift"],
+    href: "https://github.com/murilogpapa/RPG-Tic-em-Trilhas",
+    back: "RPG de terminal em Swift feito no Tic em Trilhas (Senac) durante o processo seletivo da Apple Developer Academy (aprovado nessa etapa). Ambientado em Midgard: explorar floresta (Goblin) ou torre (Guerreiro Esqueleto), atacar / defender / fugir, descansar na fogueira, level up com vida e dano. Loop de batalha e progressão no console.",
+  },
 ] as const;
 
 export type Project = (typeof projects)[number];
-export type FlipProject = Extract<Project, { kind: "flip" }>;
+export type FlipProject = Extract<Project, { kind: "flip" }> & {
+  href?: string;
+};
 export type LinkProject = Extract<Project, { kind: "link" }>;
 
 export type SkillId =

@@ -193,6 +193,23 @@ function FlipProjectCard({
             <p className="mt-3 max-w-full text-[13px] leading-relaxed break-words text-[#d0d0d0] md:text-[13.5px]">
               {project.back}
             </p>
+            {project.href ? (
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={open ? 0 : -1}
+                onClick={(event) => event.stopPropagation()}
+                className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-medium text-[#8d8d8d] transition-colors hover:text-white"
+              >
+                Ver no GitHub
+                <ExternalLink
+                  className="size-3 shrink-0"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+              </a>
+            ) : null}
           </div>
         </div>
       </div>
