@@ -50,8 +50,8 @@ export function SocialLinks({ variant }: SocialLinksProps) {
         isContact
           ? "mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2"
           : isHeader
-            ? "mt-3 flex items-center gap-3"
-            : "mt-auto flex items-center justify-center gap-4 pt-8"
+            ? "mt-3 grid w-fit grid-cols-2 gap-2 min-[400px]:flex min-[400px]:items-center min-[400px]:gap-3"
+            : "mt-auto flex items-center justify-center gap-4 pt-6"
       }
     >
       {socials.map((social) => {

@@ -3,11 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ExternalLink, X } from "lucide-react";
 import { useFlipPhase } from "@/components/useFlipPhase";
-import {
-  projects,
-  type FlipProject,
-  type LinkProject,
-} from "@/lib/content";
+import { projects, type Project } from "@/lib/content";
 
 type PortfolioSectionProps = {
   openId: string | null;
@@ -40,23 +36,19 @@ export function PortfolioSection({
         />
       ) : null}
       <ul
-        className={`mt-2 grid grid-cols-1 items-start gap-3 lg:grid-cols-3 ${
+        className={`mt-2 grid grid-cols-1 items-start gap-3 sm:grid-cols-2 3xl:grid-cols-3 ${
           openId ? "relative z-30" : ""
         }`}
       >
         {projects.map((project) => (
           <li key={project.id} className="flex min-w-0">
-            {project.kind === "link" ? (
-              <LinkProjectCard project={project} dimmed={Boolean(openId)} />
-            ) : (
-              <FlipProjectCard
-                project={project}
-                open={openId === project.id}
-                dimmed={Boolean(openId) && openId !== project.id}
-                onOpen={() => onOpen(project.id)}
-                onClose={onClose}
-              />
-            )}
+            <ProjectCard
+              project={project}
+              open={openId === project.id}
+              dimmed={Boolean(openId) && openId !== project.id}
+              onOpen={() => onOpen(project.id)}
+              onClose={onClose}
+            />
           </li>
         ))}
       </ul>
@@ -64,49 +56,18 @@ export function PortfolioSection({
   );
 }
 
-function LinkProjectCard({
-  project,
-  dimmed,
-}: {
-  project: LinkProject;
-  dimmed: boolean;
-}) {
-  return (
-    <a
-      href={project.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`flex min-h-[200px] w-full flex-1 flex-col rounded-[24px] bg-[#2a2a2a] px-5 py-5 transition-all hover:bg-[#323232] ${
-        dimmed ? "opacity-40" : ""
-      }`}
-    >
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="text-[17px] font-semibold text-white">{project.title}</h3>
-        <ExternalLink
-          className="mt-0.5 size-4 shrink-0 text-[#8d8d8d]"
-          strokeWidth={1.75}
-          aria-hidden="true"
-        />
-      </div>
-      <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-[#c8c8c8]">
-        {project.summary}
-      </p>
-      <StackList items={project.stack} />
-      <span className="mt-3 text-[11px] font-medium text-[#8d8d8d]">
-        Abrir site
-      </span>
-    </a>
-  );
+function linkLabel(href: string) {
+  return href.includes("github.com") ? "Ver no GitHub" : "Abrir site";
 }
 
-function FlipProjectCard({
+function ProjectCard({
   project,
   open,
   dimmed,
   onOpen,
   onClose,
 }: {
-  project: FlipProject;
+  project: Project;
   open: boolean;
   dimmed: boolean;
   onOpen: () => void;
@@ -143,7 +104,7 @@ function FlipProjectCard({
 
   return (
     <div
-      className={`relative w-full ${
+      className={`relative w-full min-w-0 ${
         open ? "z-30" : "flex-1"
       } ${dimmed ? "opacity-40" : ""}`}
     >
@@ -167,9 +128,9 @@ function FlipProjectCard({
               aria-controls={`${project.id}-details`}
               tabIndex={open ? -1 : 0}
               onClick={() => (open ? onClose() : onOpen())}
-              className="flex min-h-[200px] h-full w-full flex-col rounded-[24px] bg-[#2a2a2a] px-5 py-5 text-left transition-colors hover:bg-[#323232]"
+              className="flex min-h-[190px] h-full w-full flex-col rounded-[24px] bg-[#2a2a2a] px-5 py-5 text-left transition-colors hover:bg-[#323232] sm:min-h-[200px]"
             >
-              <h3 className="text-[17px] font-semibold text-white">
+              <h3 className="text-[16.5px] font-semibold leading-snug text-white sm:text-[17px]">
                 {project.title}
               </h3>
               <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-[#c8c8c8]">
@@ -202,7 +163,7 @@ function FlipProjectCard({
                 onClick={(event) => event.stopPropagation()}
                 className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-medium text-[#8d8d8d] transition-colors hover:text-white"
               >
-                Ver no GitHub
+                {linkLabel(project.href)}
                 <ExternalLink
                   className="size-3 shrink-0"
                   strokeWidth={1.75}

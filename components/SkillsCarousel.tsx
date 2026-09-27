@@ -66,7 +66,7 @@ export function SkillsCarousel({ variant }: { variant: "desktop" | "mobile" }) {
   }, [pages, pageCount]);
 
   const shift = isDesktop
-    ? `calc(-${index} * 25%)`
+    ? `calc(-${index} * (100% / var(--skills-per-view)))`
     : `calc(-${index} * 100%)`;
 
   useEffect(() => {
@@ -154,9 +154,9 @@ export function SkillsCarousel({ variant }: { variant: "desktop" | "mobile" }) {
   };
 
   return (
-    <section className="mt-5 flex min-h-0 flex-1 flex-col md:mt-10 md:flex-none">
+    <section className="mt-5 flex min-h-0 flex-1 flex-col lg:mt-8 lg:flex-none xl:mt-10">
       <SectionTitle compact>Skills</SectionTitle>
-      <div className="relative mt-5 flex min-h-[16rem] flex-1 flex-col md:mt-6 md:h-[192px] md:min-h-[192px] md:flex-none">
+      <div className="relative mt-5 flex min-h-[14rem] flex-1 flex-col sm:min-h-[16rem] lg:mt-6 lg:h-[192px] lg:min-h-[192px] lg:flex-none">
         <button
           type="button"
           onClick={() => go(-1)}
@@ -168,7 +168,7 @@ export function SkillsCarousel({ variant }: { variant: "desktop" | "mobile" }) {
           </span>
         </button>
 
-        <div className="skills-viewport relative mx-11 min-h-[16rem] flex-1 md:mx-12 md:h-full md:min-h-0 md:flex-none">
+        <div className="skills-viewport relative mx-9 min-h-[14rem] flex-1 min-[400px]:mx-11 sm:min-h-[16rem] lg:mx-12 lg:h-full lg:min-h-0 lg:flex-none">
           {isDesktop ? (
             <ul
               className={`flex h-full w-full ${animate ? "skills-track" : "skills-track is-instant"}`}
@@ -180,10 +180,13 @@ export function SkillsCarousel({ variant }: { variant: "desktop" | "mobile" }) {
                 return (
                   <li
                     key={cardKey}
-                    className={`skills-slot h-full w-1/4 shrink-0 px-2 py-3 ${
+                    className={`skills-slot h-full shrink-0 px-2 py-3 ${
                       openKey === cardKey ? "is-open" : ""
                     }`}
-                    style={{ flex: "0 0 25%" }}
+                    style={{
+                      flex: "0 0 calc(100% / var(--skills-per-view))",
+                      width: "calc(100% / var(--skills-per-view))",
+                    }}
                   >
                     <SkillCard
                       skill={skill}

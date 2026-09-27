@@ -61,18 +61,33 @@ export const learningItems = [
   },
 ] as const;
 
-export const projects = [
+export type Project = {
+  id: string;
+  title: string;
+  summary: string;
+  stack: readonly string[];
+  back: string;
+  href?: string;
+};
+
+export const projects: readonly Project[] = [
+  {
+    id: "notchmuc",
+    title: "NotchMuc",
+    summary: "app desktop · notch interativo",
+    stack: ["Desktop", "Windows", "macOS", "IA local"],
+    href: "https://notchmuc.murilogp.dev",
+    back: "NotchMuc transforma a borda de cima da tela numa ilha interativa. No notch abrem seis módulos: anéis de uso de IA (Claude, GPT, Cursor, Grok), notas, to-do, espelho da câmera, controles de mídia e bandeja de arquivos com LocalSend. Tem o Mucky, assistente que anota, marca tarefas, controla mídia e abre apps — local, com Qwen 2.5. Pra Windows (x64) e Mac (Apple Silicon).",
+  },
   {
     id: "ugest",
-    kind: "link" as const,
     title: "UGest",
     summary: "SaaS pra médicos plantonistas",
     stack: ["Next.js", "TypeScript", "Tailwind"],
-    href: "https://ugest.app",
+    back: "UGest é um SaaS em Next.js, TypeScript e Tailwind feito pra médicos plantonistas. Cuido do produto e do código.",
   },
   {
     id: "ordem-files",
-    kind: "flip" as const,
     title: "Ordem Files",
     summary: "plataforma web · fichas e campanhas",
     stack: ["Web"],
@@ -80,7 +95,6 @@ export const projects = [
   },
   {
     id: "painel-controle-impressao-3d",
-    kind: "flip" as const,
     title: "Painel de controle impressão 3D",
     summary: "estoque · filamento · consignação",
     stack: ["Web"],
@@ -88,7 +102,6 @@ export const projects = [
   },
   {
     id: "pi-bcc-1sem",
-    kind: "flip" as const,
     title: "PI BCC · 1º semestre",
     summary: "jogo web · p5.js · runner",
     stack: ["p5.js", "JavaScript", "HTML"],
@@ -97,20 +110,17 @@ export const projects = [
   },
   {
     id: "rpg-tic-em-trilhas",
-    kind: "flip" as const,
     title: "RPG Tic em Trilhas",
     summary: "RPG de terminal · Swift · Midgard",
     stack: ["Swift"],
     href: "https://github.com/murilogpapa/RPG-Tic-em-Trilhas",
     back: "RPG de terminal em Swift feito no Tic em Trilhas (Senac) durante o processo seletivo da Apple Developer Academy (aprovado nessa etapa). Ambientado em Midgard: explorar floresta (Goblin) ou torre (Guerreiro Esqueleto), atacar / defender / fugir, descansar na fogueira, level up com vida e dano. Loop de batalha e progressão no console.",
   },
-] as const;
+];
 
-export type Project = (typeof projects)[number];
-export type FlipProject = Extract<Project, { kind: "flip" }> & {
-  href?: string;
-};
-export type LinkProject = Extract<Project, { kind: "link" }>;
+export function isProjectId(value: string): boolean {
+  return projects.some((project) => project.id === value);
+}
 
 export type SkillId =
   | "html"

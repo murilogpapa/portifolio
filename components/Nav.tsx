@@ -61,9 +61,9 @@ export function Nav({ variant, section, onChange }: NavProps) {
   return (
     <nav
       aria-label="Seções"
-      className="min-w-0 rounded-bl-[24px] bg-nav px-5 py-5 lg:px-8 xl:w-1/2 xl:shrink-0 xl:px-12"
+      className="min-w-0 shrink rounded-bl-[24px] bg-nav px-3 py-5 xl:px-6 3xl:w-1/2 3xl:shrink-0 3xl:px-12"
     >
-      <ul className="flex w-full items-center justify-evenly gap-2 lg:gap-4 xl:gap-8">
+      <ul className="flex w-full items-center justify-evenly gap-0 3xl:gap-8">
         {desktopItems.map((item) => {
           const active = item.id === section;
           return (
@@ -73,7 +73,7 @@ export function Nav({ variant, section, onChange }: NavProps) {
                 onClick={() => onChange(item.id)}
                 aria-current={active ? "page" : undefined}
                 data-nav={item.id}
-                className="hit-area nav-link relative inline-flex min-h-11 items-center justify-center whitespace-nowrap px-3 py-2 text-[15px] font-semibold tracking-tight text-[#c8c8c8] transition-colors hover:text-white xl:text-[16px]"
+                className="hit-area nav-link relative inline-flex min-h-11 items-center justify-center whitespace-nowrap px-2 py-2 text-[14px] font-semibold tracking-tight text-[#c8c8c8] transition-colors hover:text-white xl:text-[15px] 3xl:px-3 3xl:text-[16px]"
               >
                 {item.label}
               </button>

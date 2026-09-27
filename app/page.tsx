@@ -52,7 +52,7 @@ export default function Home() {
 
   return (
     <main className="min-h-dvh bg-background">
-      <div className="mx-auto flex min-h-dvh w-full min-w-0 max-w-[430px] flex-col gap-4 overflow-x-hidden px-5 py-5 md:hidden">
+      <div className="mx-auto flex min-h-dvh w-full min-w-0 max-w-[430px] flex-col gap-4 overflow-x-hidden px-4 py-4 sm:max-w-[600px] sm:px-5 sm:py-5 md:max-w-[760px] lg:hidden">
         <MobileHeader />
         <Nav variant="mobile" section={section} onChange={onChange} />
         <MainCard variant="mobile" section={section} />

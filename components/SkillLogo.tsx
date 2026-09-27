@@ -21,8 +21,10 @@ type SkillLogoProps = {
   label: string;
 };
 
-const ICON = "h-[58px] w-[58px] md:h-[64px] md:w-[64px]";
-const ICON_LG = "h-[68px] w-[68px] md:h-[74px] md:w-[74px]";
+const ICON =
+  "h-[46px] w-[46px] min-[400px]:h-[58px] min-[400px]:w-[58px] md:h-[64px] md:w-[64px]";
+const ICON_LG =
+  "h-[54px] w-[54px] min-[400px]:h-[68px] min-[400px]:w-[68px] md:h-[74px] md:w-[74px]";
 
 export function SkillLogo({ id, label }: SkillLogoProps) {
   switch (id) {
@@ -45,15 +47,15 @@ export function SkillLogo({ id, label }: SkillLogoProps) {
     case "python":
       return <PythonMark />;
     case "sql":
-      return <TypeMark label="SQL" color="#F2C94C" size="text-[28px] md:text-[32px]" />;
+      return <TypeMark label="SQL" color="#F2C94C" size="text-[22px] min-[400px]:text-[28px] md:text-[32px]" />;
     case "java":
-      return <TypeMark label="Java" color="#E76F00" size="text-[28px] md:text-[32px]" />;
+      return <TypeMark label="Java" color="#E76F00" size="text-[22px] min-[400px]:text-[28px] md:text-[32px]" />;
     case "c":
       return <Si icon={siC} className={ICON_LG} size={74} />;
     case "figma":
       return <FigmaMark />;
     case "photoshop":
-      return <TypeMark label="Ps" color="#31A8FF" size="text-[40px] md:text-[44px]" />;
+      return <TypeMark label="Ps" color="#31A8FF" size="text-[30px] min-[400px]:text-[40px] md:text-[44px]" />;
     case "swift":
       return <Si icon={siSwift} />;
     case "git":
@@ -113,7 +115,7 @@ function FigmaMark() {
       viewBox="0 0 38 57"
       width={41}
       height={62}
-      className="h-[62px] w-[41px] md:h-[68px] md:w-[45px]"
+      className="h-[46px] w-[30px] min-[400px]:h-[62px] min-[400px]:w-[41px] md:h-[68px] md:w-[45px]"
       aria-hidden="true"
     >
       <path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0Z" />
@@ -129,7 +131,7 @@ function AiMark() {
   return (
     <span className="flex flex-col items-center">
       <Sparkles
-        className="h-[52px] w-[52px] text-[#c4b5fd] md:h-[58px] md:w-[58px]"
+        className="h-[40px] w-[40px] text-[#c4b5fd] min-[400px]:h-[52px] min-[400px]:w-[52px] md:h-[58px] md:w-[58px]"
         strokeWidth={1.5}
         fill="currentColor"
         aria-hidden="true"
@@ -147,7 +149,7 @@ function PythonMark() {
       viewBox="0 0 256 255"
       width={70}
       height={70}
-      className="h-[70px] w-[70px] md:h-[76px] md:w-[76px]"
+      className="h-[52px] w-[52px] min-[400px]:h-[70px] min-[400px]:w-[70px] md:h-[76px] md:w-[76px]"
       aria-hidden="true"
     >
       <path

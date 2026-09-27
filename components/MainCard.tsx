@@ -7,7 +7,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { SkillsCarousel } from "@/components/SkillsCarousel";
 import { SocialLinks } from "@/components/SocialLinks";
 import type { SectionId } from "@/components/Nav";
-import { aboutParagraphs, learningItems } from "@/lib/content";
+import { aboutParagraphs, isProjectId, learningItems } from "@/lib/content";
 import { profile } from "@/lib/profile";
 
 const titles: Record<SectionId, string> = {
@@ -32,28 +32,20 @@ export function MainCard({ variant, section, nav }: MainCardProps) {
       return;
     }
     const card = new URLSearchParams(window.location.search).get("flip");
-    if (card === "ordem-files" || card === "painel-controle-impressao-3d") {
-      setOpenProjectId(card);
-    }
+    if (card && isProjectId(card)) setOpenProjectId(card);
   }, [section]);
-
-  const flipping = section === "portfolio" && openProjectId !== null;
 
   return (
     <article
-      className={`relative flex min-h-0 min-w-0 flex-col rounded-[24px] bg-card ${
-        variant === "desktop"
-          ? "desktop-main max-lg:w-full max-lg:flex-1"
-          : "w-full flex-1"
-      } ${
-        flipping
-          ? "overflow-x-hidden md:overflow-visible lg:overflow-hidden"
-          : "overflow-hidden"
+      className={`relative flex min-h-0 min-w-0 flex-col overflow-hidden rounded-[24px] bg-card ${
+        variant === "desktop" ? "desktop-main w-full" : "w-full flex-1"
       }`}
     >
       <div className="flex shrink-0 items-start justify-between">
         <div
-          className={`shrink-0 px-5 pt-5 md:px-8 ${nav ? "md:pt-5" : "md:pt-6"}`}
+          className={`min-w-0 shrink-0 px-5 pt-5 lg:px-6 xl:px-8 ${
+            nav ? "lg:pt-5" : "lg:pt-6"
+          }`}
         >
           {(Object.entries(titles) as [SectionId, string][]).map(
             ([id, label]) => (
@@ -67,13 +59,7 @@ export function MainCard({ variant, section, nav }: MainCardProps) {
       </div>
 
       <div
-        className={`flex w-full min-h-0 min-w-0 max-w-full flex-col px-5 pb-5 md:px-8 md:pb-8 ${
-          variant === "mobile"
-            ? "flex-1 overflow-x-hidden"
-            : flipping
-              ? "overflow-x-hidden md:overflow-visible lg:flex-1 lg:overflow-x-hidden lg:overflow-y-auto"
-              : "overflow-x-hidden lg:flex-1 lg:overflow-y-auto"
-        }`}
+        className={`flex min-h-0 w-full min-w-0 max-w-full flex-1 flex-col overflow-x-hidden px-5 pb-5 lg:overflow-y-auto lg:px-6 lg:pb-6 xl:px-8 xl:pb-8`}
       >
         <div className="section-panel" data-panel="sobre">
           <AboutSection variant={variant} />
@@ -117,7 +103,7 @@ function AboutSection({ variant }: { variant: "desktop" | "mobile" }) {
 
 function LearningSection() {
   return (
-    <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+    <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
       {learningItems.map((item) => (
         <li key={item.id} className="rounded-[24px] bg-[#2a2a2a] px-5 py-5">
           <p className="text-[12px] font-medium uppercase tracking-wide text-accent">
