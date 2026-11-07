@@ -1,10 +1,11 @@
 import { links, profile } from "@/lib/content";
+import type { Content } from "@/lib/content";
 import { Note, PX, cn } from "./blueprint";
 
 const secondary =
   "flex min-h-12 items-center rounded-full border border-white/15 px-5 text-[15px] font-medium text-[#f2f2f3] transition-colors hover:bg-white/10";
 
-export function Contact() {
+export function Contact({ c }: { c: Content }) {
   return (
     <>
       <Note>{`<section id="contato">`}</Note>
@@ -15,17 +16,16 @@ export function Contact() {
         >
           <span className="flex min-h-9 items-center gap-2.5 rounded-full bg-[rgb(74_222_128/0.1)] px-4 text-sm font-medium text-[#86efac]">
             <span aria-hidden="true" className="animate-ping-soft size-2 rounded-full bg-[#4ade80]" />
-            {profile.status}
+            {c.profile.status}
           </span>
           <h2
             id="contato-titulo"
             className="text-4xl leading-[1.05] font-semibold tracking-[-0.035em] text-balance sm:text-5xl lg:text-6xl"
           >
-            Vamos conversar?
+            {c.ui.contactTitle}
           </h2>
           <p className="max-w-[560px] text-base leading-relaxed text-pretty text-[#b4b4bb] sm:text-lg">
-            Se tiver uma vaga ou um projeto em desenvolvimento de software, me chama. Estudo à noite e
-            estou disponível no período diurno.
+            {c.ui.contactText}
           </p>
           <a
             href={`mailto:${profile.email}`}
@@ -49,7 +49,7 @@ export function Contact() {
               rel="noopener"
               className="flex min-h-12 items-center rounded-full bg-[#f2f2f3] px-[22px] text-[15px] font-semibold text-[#0b0b0c] transition-opacity hover:opacity-90"
             >
-              Currículo em PDF
+              {c.ui.resume}
             </a>
           </div>
         </div>

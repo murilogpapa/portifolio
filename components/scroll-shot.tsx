@@ -16,7 +16,7 @@ export function ScrollShot({
   height,
   barLabel,
   href,
-  title,
+  text,
 }: {
   src: string;
   alt: string;
@@ -24,20 +24,20 @@ export function ScrollShot({
   height: number;
   barLabel: string;
   href?: string;
-  title: string;
+  text: { shot: string; openInNewTab: string; region: string; tap: string; click: string; sr: string };
 }) {
   const [active, setActive] = useState(false);
 
   return (
     <div className="flex min-w-0 flex-col overflow-hidden rounded-[14px] border border-line-strong bg-card shadow-[0_20px_50px_rgba(0,0,0,0.18)]">
       <BrowserBar label={barLabel}>
-        <span className="font-mono text-[11px] whitespace-nowrap text-dim">print</span>
+        <span className="font-mono text-[11px] whitespace-nowrap text-dim">{text.shot}</span>
         {href ? (
           <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Abrir o site do ${title} em nova aba`}
+            aria-label={text.openInNewTab}
             className="flex size-9 shrink-0 items-center justify-center rounded-lg text-t3 transition-colors hover:bg-chip hover:text-fg"
           >
             <ExternalLink size={16} aria-hidden="true" />
@@ -48,7 +48,7 @@ export function ScrollShot({
       <div className="relative h-[460px] bg-shot sm:h-[520px] lg:h-[560px]">
         <div
           role="region"
-          aria-label={`Print da página do ${title}`}
+          aria-label={text.region}
           tabIndex={active ? 0 : -1}
           className={`absolute inset-0 ${active ? "overflow-y-auto" : "overflow-hidden"}`}
         >
@@ -69,9 +69,9 @@ export function ScrollShot({
           >
             <span className="flex items-center gap-2 rounded-full bg-black/85 px-4 py-2.5 text-sm font-medium text-white ring-1 ring-white/15 backdrop-blur transition-transform group-hover:scale-105">
               <MousePointerClick size={16} aria-hidden="true" />
-              <span className="sm:hidden">Toque para rolar a página</span>
-              <span className="hidden sm:inline">Clique para rolar a página</span>
-              <span className="sr-only"> do {title}</span>
+              <span className="sm:hidden">{text.tap}</span>
+              <span className="hidden sm:inline">{text.click}</span>
+              <span className="sr-only">{text.sr}</span>
             </span>
           </button>
         ) : null}

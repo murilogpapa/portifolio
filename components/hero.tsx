@@ -1,5 +1,6 @@
 import { ArrowUpRight, Download } from "lucide-react";
 import { links, profile } from "@/lib/content";
+import type { Content } from "@/lib/content";
 import { Note, PX, Spacer, cn } from "./blueprint";
 
 const eqBars = [
@@ -9,7 +10,7 @@ const eqBars = [
   { h: 7, delay: 90 },
 ];
 
-export function Hero() {
+export function Hero({ c }: { c: Content }) {
   return (
     <section id="topo" aria-labelledby="titulo">
       <Note>rounded-full bg-black ring-1 ring-white/10</Note>
@@ -30,10 +31,10 @@ export function Hero() {
           </span>
           <span className="flex min-w-0 flex-col gap-0.5">
             <span className="font-mono text-[11px] tracking-[0.08em] text-[#8e8e96] uppercase">
-              Construindo agora
+              {c.ui.building}
             </span>
             <span className="text-[15px] font-medium text-[#f2f2f3]">
-              NotchMuc<span className="hidden sm:inline">, uma ilha interativa no topo da tela</span>
+              NotchMuc<span className="hidden sm:inline">{c.ui.buildingDesc}</span>
             </span>
           </span>
           <ArrowUpRight size={16} aria-hidden="true" className="shrink-0 text-[#8e8e96]" />
@@ -43,7 +44,7 @@ export function Hero() {
           style={{ animationDelay: "140ms" }}
         >
           <span aria-hidden="true" className="animate-ping-soft size-2 rounded-full bg-ok-dot" />
-          {profile.status}
+          {c.profile.status}
         </span>
       </div>
 
@@ -55,7 +56,7 @@ export function Hero() {
           style={{ animationDelay: "200ms" }}
         >
           {profile.name}
-          <span className="block text-dim">{profile.role}</span>
+          <span className="block text-dim">{c.profile.role}</span>
         </h1>
       </div>
 
@@ -68,7 +69,7 @@ export function Hero() {
           className="animate-rise max-w-[680px] text-lg leading-relaxed text-pretty text-t2 lg:text-[21px]"
           style={{ animationDelay: "260ms" }}
         >
-          {profile.summary}
+          {c.profile.summary}
         </p>
       </div>
 
@@ -81,7 +82,7 @@ export function Hero() {
             href="#projetos"
             className="flex min-h-12 items-center rounded-full bg-btn-bg px-[22px] text-[15px] font-semibold text-btn-fg transition-opacity hover:opacity-90"
           >
-            Ver projetos
+            {c.ui.seeProjects}
           </a>
           <a
             href={profile.resume}
@@ -90,7 +91,7 @@ export function Hero() {
             className="flex min-h-12 items-center gap-2 rounded-full border border-line-strong px-5 text-[15px] font-medium transition-colors hover:bg-chip"
           >
             <Download size={16} aria-hidden="true" />
-            Currículo em PDF
+            {c.ui.resume}
           </a>
           <div className="flex items-center">
             <a
@@ -114,7 +115,7 @@ export function Hero() {
       </div>
 
       <div className={cn("rule-t py-3.5", PX)}>
-        <p className="font-mono text-[13px] leading-relaxed text-dim">{profile.meta}</p>
+        <p className="font-mono text-[13px] leading-relaxed text-dim">{c.profile.meta}</p>
       </div>
       <Spacer />
     </section>

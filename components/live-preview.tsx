@@ -8,7 +8,17 @@ import { ExternalLink, Lock, MousePointerClick } from "lucide-react";
  * Começa "travada" para a rolagem da página não ficar presa dentro do iframe;
  * um clique (ou toque) libera a interação.
  */
-export function LivePreview({ url, label, title }: { url: string; label: string; title: string }) {
+export type LivePreviewText = {
+  live: string;
+  openInNewTab: string;
+  loading: string;
+  iframeTitle: string;
+  tap: string;
+  click: string;
+  sr: string;
+};
+
+export function LivePreview({ url, label, text }: { url: string; label: string; text: LivePreviewText }) {
   const [active, setActive] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -17,13 +27,13 @@ export function LivePreview({ url, label, title }: { url: string; label: string;
       <BrowserBar label={label}>
         <span className="flex items-center gap-1.5 font-mono text-[11px] whitespace-nowrap text-ok-fg">
           <span aria-hidden="true" className="animate-ping-soft size-1.5 rounded-full bg-ok-dot" />
-          ao vivo
+          {text.live}
         </span>
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Abrir o site do ${title} em nova aba`}
+          aria-label={text.openInNewTab}
           className="flex size-9 shrink-0 items-center justify-center rounded-lg text-t3 transition-colors hover:bg-chip hover:text-fg"
         >
           <ExternalLink size={16} aria-hidden="true" />
@@ -33,12 +43,12 @@ export function LivePreview({ url, label, title }: { url: string; label: string;
       <div className="relative h-[460px] bg-shot sm:h-[520px] lg:h-[560px]">
         {!loaded ? (
           <div className="absolute inset-0 flex items-center justify-center font-mono text-xs text-dim">
-            Carregando {label}…
+            {text.loading}
           </div>
         ) : null}
         <iframe
           src={url}
-          title={`Site do ${title} ao vivo`}
+          title={text.iframeTitle}
           loading="lazy"
           onLoad={() => setLoaded(true)}
           referrerPolicy="strict-origin-when-cross-origin"
@@ -55,9 +65,9 @@ export function LivePreview({ url, label, title }: { url: string; label: string;
           >
             <span className="flex items-center gap-2 rounded-full bg-black/85 px-4 py-2.5 text-sm font-medium text-white ring-1 ring-white/15 backdrop-blur transition-transform group-hover:scale-105">
               <MousePointerClick size={16} aria-hidden="true" />
-              <span className="sm:hidden">Toque para interagir</span>
-              <span className="hidden sm:inline">Clique para interagir</span>
-              <span className="sr-only"> com o site do {title}</span>
+              <span className="sm:hidden">{text.tap}</span>
+              <span className="hidden sm:inline">{text.click}</span>
+              <span className="sr-only">{text.sr}</span>
             </span>
           </button>
         ) : null}

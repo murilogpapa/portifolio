@@ -1,18 +1,19 @@
 import Image from "next/image";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { featured, links, otherProjects, schoolProjects } from "@/lib/content";
-import type { Featured, MiniProject } from "@/lib/content";
+import { fill, links } from "@/lib/content";
+import type { Content, Featured, MiniProject } from "@/lib/content";
 import { BrowserBar, LivePreview } from "./live-preview";
 import { ScrollShot } from "./scroll-shot";
 import { Chip, Dot, Note, PX, SectionHeader, Spacer, cn } from "./blueprint";
 
-export function Projects() {
+export function Projects({ c }: { c: Content }) {
+  const ui = c.ui;
   return (
     <section id="projetos" aria-labelledby="projetos-titulo">
       <SectionHeader
         id="projetos"
-        title="Projetos"
-        subtitle="O NotchMuc está rodando aqui dentro, ao vivo: pode clicar e mexer."
+        title={ui.projectsTitle}
+        subtitle={ui.projectsSubtitle}
         aside={
           <a
             href={links.github}
@@ -20,25 +21,27 @@ export function Projects() {
             rel="noopener noreferrer"
             className="flex min-h-11 items-center gap-1.5 text-[15px] text-t3 transition-colors hover:text-fg"
           >
-            Tudo no GitHub
+            {ui.allOnGithub}
             <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         }
       />
 
-      {featured.map((project, i) => (
-        <FeaturedProject key={project.id} project={project} reverse={i % 2 === 1} />
+      {c.featured.map((project, i) => (
+        <FeaturedProject key={project.id} project={project} reverse={i % 2 === 1} ui={ui} />
       ))}
 
       <Note>grid grid-cols-3 gap-px</Note>
-      <MiniGroup title="Outros projetos" items={otherProjects} />
-      <MiniGroup title="Faculdade e cursos" items={schoolProjects} />
+      <MiniGroup title={ui.otherProjects} items={c.otherProjects} fallbackCta={ui.viewProject} />
+      <MiniGroup title={ui.schoolProjects} items={c.schoolProjects} fallbackCta={ui.viewProject} />
       <Spacer />
     </section>
   );
 }
 
-function FeaturedProject({ project, reverse }: { project: Featured; reverse: boolean }) {
+type UI = Content["ui"];
+
+function FeaturedProject({ project, reverse, ui }: { project: Featured; reverse: boolean; ui: UI }) {
   return (
     <article
       id={project.id}
@@ -77,7 +80,7 @@ function FeaturedProject({ project, reverse }: { project: Featured; reverse: boo
             ))}
           </ul>
         ) : null}
-        <ul aria-label="Tecnologias" className="flex flex-wrap gap-2">
+        <ul aria-label={ui.tech} className="flex flex-wrap gap-2">
           {project.stack.map((s) => (
             <li key={s}>
               <Chip>{s}</Chip>
@@ -91,7 +94,7 @@ function FeaturedProject({ project, reverse }: { project: Featured; reverse: boo
             rel="noopener noreferrer"
             className="flex min-h-11 items-center gap-1.5 self-start text-[15px] font-medium text-accent hover:underline hover:underline-offset-4"
           >
-            Abrir {project.site.label}
+            {fill(ui.openSite, { label: project.site.label })}
             <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         ) : null}
@@ -103,14 +106,15 @@ function FeaturedProject({ project, reverse }: { project: Featured; reverse: boo
           reverse ? "lg:order-1 lg:border-r" : "lg:border-l",
         )}
       >
-        <PreviewBody project={project} />
+        <PreviewBody project={project} ui={ui} />
       </div>
     </article>
   );
 }
 
-function PreviewBody({ project }: { project: Featured }) {
+function PreviewBody({ project, ui }: { project: Featured; ui: UI }) {
   const { preview, site } = project;
+  const vars = { name: project.name, label: site?.label ?? "" };
 
   if (preview.kind === "live") {
     if (!site) return null;
@@ -119,7 +123,19 @@ function PreviewBody({ project }: { project: Featured }) {
         <span aria-hidden="true" className="hidden font-mono text-[11px] text-note sm:block">
           {`<iframe src="${site.url}" />`}
         </span>
-        <LivePreview url={site.url} label={site.label} title={project.name} />
+        <LivePreview
+          url={site.url}
+          label={site.label}
+          text={{
+            live: ui.live,
+            openInNewTab: fill(ui.openInNewTab, vars),
+            loading: fill(ui.loading, vars),
+            iframeTitle: fill(ui.iframeTitle, vars),
+            tap: ui.tapToInteract,
+            click: ui.clickToInteract,
+            sr: fill(ui.srInteract, vars),
+          }}
+        />
       </>
     );
   }
@@ -141,7 +157,14 @@ function PreviewBody({ project }: { project: Featured }) {
           height={preview.height}
           barLabel={preview.barLabel}
           href={site?.url}
-          title={project.name}
+          text={{
+            shot: ui.shot,
+            openInNewTab: fill(ui.openInNewTab, vars),
+            region: fill(ui.shotRegion, vars),
+            tap: ui.tapToScroll,
+            click: ui.clickToScroll,
+            sr: fill(ui.srScroll, vars),
+          }}
         />
       </>
     );
@@ -165,7 +188,15 @@ function PreviewBody({ project }: { project: Featured }) {
   );
 }
 
-function MiniGroup({ title, items }: { title: string; items: MiniProject[] }) {
+function MiniGroup({
+  title,
+  items,
+  fallbackCta,
+}: {
+  title: string;
+  items: MiniProject[];
+  fallbackCta: string;
+}) {
   return (
     <>
       <div className={cn("rule-t pt-7 pb-5", PX)}>
@@ -194,7 +225,7 @@ function MiniGroup({ title, items }: { title: string; items: MiniProject[] }) {
                 >
                   {body}
                   <span className="flex items-center gap-1.5 text-sm text-accent">
-                    {item.cta ?? "Ver projeto"}
+                    {item.cta ?? fallbackCta}
                     <ArrowRight
                       size={14}
                       aria-hidden="true"

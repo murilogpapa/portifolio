@@ -1,13 +1,12 @@
-import { education, experience, stack } from "@/lib/content";
-import type { TimelineItem } from "@/lib/content";
+import type { Content, TimelineItem } from "@/lib/content";
 import { PX, SectionHeader, Spacer, cn } from "./blueprint";
 
-export function Stack() {
+export function Stack({ c }: { c: Content }) {
   return (
     <section id="stack" aria-labelledby="stack-titulo">
-      <SectionHeader id="stack" title="Stack" subtitle="O que uso no dia a dia, separado por área." />
+      <SectionHeader id="stack" title="Stack" subtitle={c.ui.stackSubtitle} />
       <dl data-reveal className="m-0 grid gap-px border-t border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-        {stack.map((group) => (
+        {c.stack.map((group) => (
           <div key={group.area} className="flex flex-col gap-3 bg-bg px-5 py-7 sm:px-8">
             <dt className="font-mono text-xs font-medium tracking-[0.08em] text-accent uppercase">
               {group.area}
@@ -21,15 +20,15 @@ export function Stack() {
   );
 }
 
-export function Timeline() {
+export function Timeline({ c }: { c: Content }) {
   return (
     <section id="trajetoria" aria-labelledby="trajetoria-titulo">
-      <SectionHeader id="trajetoria" title="Trajetória" />
+      <SectionHeader id="trajetoria" title={c.ui.timelineTitle} />
       <div data-reveal className="rule-t grid lg:grid-cols-2">
-        <TimelineColumn title="Experiência" items={experience} />
+        <TimelineColumn title={c.ui.experience} items={c.experience} />
         <TimelineColumn
-          title="Formação"
-          items={education}
+          title={c.ui.education}
+          items={c.education}
           className="border-t border-line lg:border-t-0 lg:border-l"
         />
       </div>

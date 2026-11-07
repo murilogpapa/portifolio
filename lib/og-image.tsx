@@ -1,10 +1,11 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { getContent, profile } from "./content";
+import type { Locale } from "./content";
 
-export const alt = "Murilo G. Papa · Desenvolvedor full stack";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+// Imagem de compartilhamento (Open Graph / Twitter), uma por idioma.
+export const ogSize = { width: 1200, height: 630 };
 
 const fontDir = join(process.cwd(), "node_modules/geist/dist/fonts");
 
@@ -64,12 +65,15 @@ function Words({ text, size, tracking, style }: { text: string; size: number; tr
   );
 }
 
-export default async function Image() {
-  const [regular, semibold, mono] = await Promise.all([
+export async function renderOg(locale: Locale) {
+  const c = getContent(locale);
+  const [regular, semibold, mono, avatar] = await Promise.all([
     readFile(join(fontDir, "geist-sans/Geist-Regular.ttf")),
     readFile(join(fontDir, "geist-sans/Geist-SemiBold.ttf")),
     readFile(join(fontDir, "geist-mono/GeistMono-Regular.ttf")),
+    readFile(join(process.cwd(), "public/avatar-nav.png")),
   ]);
+  const avatarSrc = `data:image/png;base64,${avatar.toString("base64")}`;
 
   return new ImageResponse(
     (
@@ -105,25 +109,11 @@ export default async function Image() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "4px 14px 4px 4px" }}>
-              <div
-                style={{
-                  width: 30,
-                  height: 30,
-                  borderRadius: 999,
-                  background: FG,
-                  color: BG,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontFamily: "Geist Mono",
-                  fontSize: 12,
-                }}
-              >
-                MP
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+              <img src={avatarSrc} width={34} height={34} style={{ display: "flex" }} />
               <div style={{ display: "flex", fontSize: 17, fontWeight: 600 }}>Murilo</div>
             </div>
-            {["Projetos", "Stack", "Trajetória", "Contato"].map((item) => (
+            {c.nav.map(({ label: item }) => (
               <div key={item} style={{ display: "flex", padding: "0 12px", fontSize: 15, color: "#b4b4bb", fontWeight: 400 }}>
                 {item}
               </div>
@@ -148,7 +138,7 @@ export default async function Image() {
             }}
           >
             <div style={{ width: 10, height: 10, borderRadius: 999, background: "#4ade80", display: "flex" }} />
-            Aberto a novas oportunidades
+            {c.profile.status}
           </div>
           <div
             style={{
@@ -167,8 +157,8 @@ export default async function Image() {
               ))}
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <div style={{ display: "flex", fontFamily: "Geist Mono", fontSize: 13, letterSpacing: 1, color: DIM }}>CONSTRUINDO AGORA</div>
-              <div style={{ display: "flex", fontSize: 19, fontWeight: 600 }}>NotchMuc, ilha no topo da tela</div>
+              <div style={{ display: "flex", fontFamily: "Geist Mono", fontSize: 13, letterSpacing: 1, color: DIM }}>{c.ui.building.toUpperCase()}</div>
+              <div style={{ display: "flex", fontSize: 19, fontWeight: 600 }}>{locale === "pt" ? "NotchMuc, ilha no topo da tela" : "NotchMuc, an island atop the screen"}</div>
             </div>
           </div>
         </div>
@@ -209,8 +199,8 @@ export default async function Image() {
             <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.12)", display: "flex" }} />
             <div style={{ width: 30, height: 30, borderRadius: 8, background: "#26262b", display: "flex" }} />
             <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-              <div style={{ display: "flex", fontSize: 13, fontWeight: 600 }}>Tocando agora</div>
-              <div style={{ display: "flex", fontSize: 11, color: DIM }}>Módulo de mídia</div>
+              <div style={{ display: "flex", fontSize: 13, fontWeight: 600 }}>{locale === "pt" ? "Tocando agora" : "Now playing"}</div>
+              <div style={{ display: "flex", fontSize: 11, color: DIM }}>{locale === "pt" ? "Módulo de mídia" : "Media module"}</div>
             </div>
             <div style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 16, marginLeft: 6 }}>
               {[7, 15, 10, 13].map((h, i) => (
@@ -245,7 +235,7 @@ export default async function Image() {
           {/* nome do app e olhos do Mucky */}
           <div style={{ position: "absolute", left: 20, bottom: 16, display: "flex", flexDirection: "column", gap: 2 }}>
             <div style={{ display: "flex", fontSize: 24, fontWeight: 600, letterSpacing: -0.5 }}>NotchMuc</div>
-            <div style={{ display: "flex", fontSize: 12, color: DIM }}>App desktop · Windows e macOS</div>
+            <div style={{ display: "flex", fontSize: 12, color: DIM }}>{locale === "pt" ? "App desktop · Windows e macOS" : "Desktop app · Windows and macOS"}</div>
           </div>
           <div style={{ position: "absolute", right: 30, bottom: 20, display: "flex", alignItems: "flex-end", gap: 14 }}>
             <div style={{ width: 19, height: 30, borderRadius: 999, background: "#fff", transform: "rotate(-12deg)", display: "flex" }} />
@@ -256,8 +246,8 @@ export default async function Image() {
         {/* nome e cargo */}
         <Note x={88} y={318}>text-8xl font-semibold tracking-tighter</Note>
         <div style={{ position: "absolute", left: 84, top: 354, display: "flex", flexDirection: "column" }}>
-          <Words text="Murilo G. Papa" size={92} tracking={-4} style={{ lineHeight: 1 }} />
-          <Words text="Desenvolvedor full stack." size={50} tracking={-2} style={{ lineHeight: 1.1, color: DIM, marginTop: 6 }} />
+          <Words text={profile.name} size={92} tracking={-4} style={{ lineHeight: 1 }} />
+          <Words text={c.profile.role} size={50} tracking={-2} style={{ lineHeight: 1.1, color: DIM, marginTop: 6 }} />
         </div>
 
         {/* faixa de baixo */}
@@ -283,7 +273,7 @@ export default async function Image() {
       </div>
     ),
     {
-      ...size,
+      ...ogSize,
       fonts: [
         { name: "Geist", data: regular, style: "normal", weight: 400 },
         { name: "Geist", data: semibold, style: "normal", weight: 600 },
