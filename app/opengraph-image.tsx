@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export const alt = "Murilo Papa · Desenvolvedor full stack";
+export const alt = "Murilo G. Papa · Desenvolvedor full stack";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -62,7 +62,7 @@ export default async function Image() {
             murilogp.dev
           </div>
           <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-            <span style={{ fontSize: 120, letterSpacing: -5 }}>Murilo Papa</span>
+            <span style={{ fontSize: 120, letterSpacing: -5 }}>Murilo G. Papa</span>
             <span style={{ fontSize: 64, letterSpacing: -2, color: "#8e8e96", marginTop: 8 }}>
               Desenvolvedor full stack.
             </span>

@@ -2,7 +2,7 @@
 // projetos, stack ou trajetória sem mexer nos componentes.
 
 export const profile = {
-  name: "Murilo Papa",
+  name: "Murilo G. Papa",
   fullName: "Murilo Giampiccolo Papa",
   role: "Desenvolvedor full stack.",
   summary:
@@ -36,10 +36,24 @@ export type Featured = {
   description: string;
   bullets: string[];
   stack: string[];
-  /** Site que aparece ao vivo num iframe. */
-  live?: { url: string; label: string };
-  /** Print estático quando o projeto não tem site público. */
-  image?: { src: string; alt: string; width: number; height: number };
+  /** Link público do projeto, se houver. */
+  site?: { url: string; label: string };
+  /**
+   * O que aparece na janela de navegador:
+   * - live: o site rodando num iframe
+   * - image: um print; com `scroll` a janela rola pela página inteira
+   */
+  preview:
+    | { kind: "live" }
+    | {
+        kind: "image";
+        src: string;
+        alt: string;
+        width: number;
+        height: number;
+        barLabel: string;
+        scroll?: boolean;
+      };
 };
 
 export const featured: Featured[] = [
@@ -57,7 +71,8 @@ export const featured: Featured[] = [
       "Temas personalizáveis, compartilháveis por link",
     ],
     stack: ["Tauri", "Next.js", "Supabase", "Stripe", "llama.cpp"],
-    live: { url: "https://notchmuc.murilogp.dev", label: "notchmuc.murilogp.dev" },
+    site: { url: "https://notchmuc.murilogp.dev", label: "notchmuc.murilogp.dev" },
+    preview: { kind: "live" },
   },
   {
     id: "salaobio",
@@ -73,7 +88,16 @@ export const featured: Featured[] = [
       "Página própria por loja em subdomínio, com a marca dela e instalável como app (PWA)",
     ],
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "PWA"],
-    live: { url: "https://salaobio.com.br", label: "salaobio.com.br" },
+    site: { url: "https://salaobio.com.br", label: "salaobio.com.br" },
+    preview: {
+      kind: "image",
+      src: "/projetos/salao-bio.webp",
+      alt: "Página inicial do Salão Bio, com a apresentação do produto, como funciona, personalização, planos e perguntas frequentes",
+      width: 1418,
+      height: 8000,
+      barLabel: "salaobio.com.br",
+      scroll: true,
+    },
   },
   {
     id: "ordem-files",
@@ -84,11 +108,13 @@ export const featured: Featured[] = [
       "Plataforma de mesas de Ordem Paranormal que criei pro meu grupo de RPG, com fichas de personagem, ferramentas do mestre e temas visuais. Usada por mais de 20 jogadores.",
     bullets: [],
     stack: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
-    image: {
+    preview: {
+      kind: "image",
       src: "/projetos/ordem-files.webp",
       alt: "Ficha de personagem no Ordem Files, com pontos de vida, atributos e dados pessoais",
       width: 1180,
       height: 885,
+      barLabel: "Ficha de personagem · uso privado do grupo",
     },
   },
 ];

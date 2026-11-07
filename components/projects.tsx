@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { featured, links, otherProjects, schoolProjects } from "@/lib/content";
 import type { Featured, MiniProject } from "@/lib/content";
 import { BrowserBar, LivePreview } from "./live-preview";
+import { ScrollShot } from "./scroll-shot";
 import { Chip, Dot, Note, PX, SectionHeader, Spacer, cn } from "./blueprint";
 
 export function Projects() {
@@ -11,7 +12,7 @@ export function Projects() {
       <SectionHeader
         id="projetos"
         title="Projetos"
-        subtitle="Dois deles estão rodando aqui dentro: pode rolar e clicar."
+        subtitle="O NotchMuc está rodando aqui dentro, ao vivo: pode clicar e mexer."
         aside={
           <a
             href={links.github}
@@ -83,14 +84,14 @@ function FeaturedProject({ project, reverse }: { project: Featured; reverse: boo
             </li>
           ))}
         </ul>
-        {project.live ? (
+        {project.site ? (
           <a
-            href={project.live.url}
+            href={project.site.url}
             target="_blank"
             rel="noopener noreferrer"
             className="flex min-h-11 items-center gap-1.5 self-start text-[15px] font-medium text-accent hover:underline hover:underline-offset-4"
           >
-            Abrir {project.live.label}
+            Abrir {project.site.label}
             <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         ) : null}
@@ -102,33 +103,65 @@ function FeaturedProject({ project, reverse }: { project: Featured; reverse: boo
           reverse ? "lg:order-1 lg:border-r" : "lg:border-l",
         )}
       >
-        {project.live ? (
-          <>
-            <span aria-hidden="true" className="hidden font-mono text-[11px] text-note sm:block">
-              {`<iframe src="${project.live.url}" />`}
-            </span>
-            <LivePreview url={project.live.url} label={project.live.label} title={project.name} />
-          </>
-        ) : project.image ? (
-          <>
-            <span aria-hidden="true" className="hidden font-mono text-[11px] text-note sm:block">
-              {`<img src="${project.image.src}" />`}
-            </span>
-            <figure className="m-0 overflow-hidden rounded-[14px] border border-line-strong bg-card shadow-[0_20px_50px_rgba(0,0,0,0.18)]">
-              <BrowserBar label="Ficha de personagem · uso privado do grupo" />
-              <Image
-                src={project.image.src}
-                alt={project.image.alt}
-                width={project.image.width}
-                height={project.image.height}
-                sizes="(min-width: 1360px) 760px, (min-width: 1024px) 56vw, 100vw"
-                className="block h-auto w-full"
-              />
-            </figure>
-          </>
-        ) : null}
+        <PreviewBody project={project} />
       </div>
     </article>
+  );
+}
+
+function PreviewBody({ project }: { project: Featured }) {
+  const { preview, site } = project;
+
+  if (preview.kind === "live") {
+    if (!site) return null;
+    return (
+      <>
+        <span aria-hidden="true" className="hidden font-mono text-[11px] text-note sm:block">
+          {`<iframe src="${site.url}" />`}
+        </span>
+        <LivePreview url={site.url} label={site.label} title={project.name} />
+      </>
+    );
+  }
+
+  const note = (
+    <span aria-hidden="true" className="hidden font-mono text-[11px] text-note sm:block">
+      {`<img src="${preview.src}" />`}
+    </span>
+  );
+
+  if (preview.scroll) {
+    return (
+      <>
+        {note}
+        <ScrollShot
+          src={preview.src}
+          alt={preview.alt}
+          width={preview.width}
+          height={preview.height}
+          barLabel={preview.barLabel}
+          href={site?.url}
+          title={project.name}
+        />
+      </>
+    );
+  }
+
+  return (
+    <>
+      {note}
+      <figure className="m-0 overflow-hidden rounded-[14px] border border-line-strong bg-card shadow-[0_20px_50px_rgba(0,0,0,0.18)]">
+        <BrowserBar label={preview.barLabel} />
+        <Image
+          src={preview.src}
+          alt={preview.alt}
+          width={preview.width}
+          height={preview.height}
+          sizes="(min-width: 1360px) 760px, (min-width: 1024px) 56vw, 100vw"
+          className="block h-auto w-full"
+        />
+      </figure>
+    </>
   );
 }
 
