@@ -17,7 +17,7 @@ Meu portfólio: quem eu sou, o que construí e como falar comigo. Feito do zero 
 
 - **Visual blueprint:** linhas que atravessam a página, laterais hachuradas e anotações com as classes do Tailwind, inspirado no site do Tailwind CSS.
 - **Tema claro e escuro sem piscar:** um script no `<head>` aplica o tema salvo antes da primeira pintura.
-- **Português e inglês:** `/` em português e `/en` em inglês, cada um com o próprio `<html lang>`, metadados, `hreflang` e imagem de compartilhamento. A troca de idioma mantém a seção em que você está.
+- **Português e inglês:** `/` em português e `/en` em inglês, cada um com o próprio `<html lang>`, metadados, `hreflang` e imagem de compartilhamento. Quem chega com o navegador em outro idioma cai direto no inglês (via `proxy.ts`), e a escolha manual no botão PT/EN fica salva. A troca mantém a seção em que você está.
 - **Responsivo de verdade:** a navegação em ilha vira menu no celular e as grades se reorganizam por breakpoint. Testado de 390 a 1440 px.
 - **Animações** de entrada e ao rolar, que desligam com "reduzir movimento".
 - **Prévias travadas:** o iframe e o print só capturam a rolagem depois de um clique, pra página não ficar presa.

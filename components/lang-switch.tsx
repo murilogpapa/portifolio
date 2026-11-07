@@ -25,6 +25,8 @@ export function LangSwitch({
       aria-label={label}
       title={label}
       onClick={(e) => {
+        // Escolha manual vale mais que o idioma do navegador (ver proxy.ts).
+        document.cookie = `lingua=${short.toLowerCase()}; path=/; max-age=31536000; samesite=lax`;
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
         e.preventDefault();
         window.location.href = href + window.location.hash;
