@@ -1,470 +1,212 @@
 @import "tailwindcss";
 
-:root {
-  --background: #0e0e0e;
-  --foreground: #f5f5f5;
-  --card: #1e1e1e;
-  --nav: #2a2a2a;
-  --accent: #3b82f6;
-  --muted: #a3a3a3;
-}
+/* O tema vem do atributo data-theme no <html> (escuro por padrão). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* Width at which the desktop layout reaches its full Figma size (1510px + gutters). */
-@theme {
-  --breakpoint-3xl: 95rem;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-nav: var(--nav);
-  --color-accent: var(--accent);
-  --color-muted: var(--muted);
-  --font-sans: var(--font-inter);
-}
-
-html {
-  background: #0e0e0e;
+:root,
+[data-theme="dark"] {
+  --bg: #0b0b0c;
+  --fg: #f2f2f3;
+  --t2: #c4c4ca;
+  --t3: #b4b4bb;
+  --muted: #a1a1aa;
+  --dim: #8e8e96;
+  --note: #7c7c86;
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.16);
+  --hatch: rgb(255 255 255 / 0.06);
+  --card: #131315;
+  --shot: #18181b;
+  --chip: rgb(255 255 255 / 0.06);
+  --chip-fg: #d4d4d8;
+  --accent: #7cb4ff;
+  --accent-soft: rgb(124 180 255 / 0.12);
+  --ok-bg: rgb(74 222 128 / 0.1);
+  --ok-fg: #86efac;
+  --ok-dot: #4ade80;
+  --btn-bg: #f2f2f3;
+  --btn-fg: #0b0b0c;
+  --island-line: rgb(255 255 255 / 0.1);
   color-scheme: dark;
 }
 
-html,
-body {
-  background: var(--background);
-  color: var(--foreground);
+[data-theme="light"] {
+  --bg: #fafafa;
+  --fg: #0b0b0c;
+  --t2: #3f3f46;
+  --t3: #52525b;
+  --muted: #52525b;
+  --dim: #63636b;
+  --note: #6b6b75;
+  --line: rgb(11 11 12 / 0.09);
+  --line-strong: rgb(11 11 12 / 0.18);
+  --hatch: rgb(11 11 12 / 0.07);
+  --card: #ffffff;
+  --shot: #f1f1f3;
+  --chip: rgb(11 11 12 / 0.05);
+  --chip-fg: #27272a;
+  --accent: #2563eb;
+  --accent-soft: rgb(37 99 235 / 0.08);
+  --ok-bg: rgb(22 163 74 / 0.1);
+  --ok-fg: #15803d;
+  --ok-dot: #16a34a;
+  --btn-bg: #0b0b0c;
+  --btn-fg: #fafafa;
+  --island-line: rgb(0 0 0 / 0.2);
+  color-scheme: light;
 }
 
-/* Stacked shell up to 1023px. From 1024px the Figma two-column layout
-   (sidebar 370x709 + main 1108x888, gap 32) laid out fluidly: it keeps the
-   design sizes at 1520px+ and shrinks the tracks instead of zooming out. */
-.desktop-shell {
-  display: none;
+/* Cor de hover opaca, para as células da grade não deixarem a linha vazar. */
+:root,
+[data-theme] {
+  --hover: color-mix(in srgb, var(--accent) 6%, var(--bg));
 }
 
-.desktop-stage-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-t2: var(--t2);
+  --color-t3: var(--t3);
+  --color-muted: var(--muted);
+  --color-dim: var(--dim);
+  --color-note: var(--note);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-card: var(--card);
+  --color-shot: var(--shot);
+  --color-chip: var(--chip);
+  --color-chip-fg: var(--chip-fg);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-hover: var(--hover);
+  --color-ok-bg: var(--ok-bg);
+  --color-ok-fg: var(--ok-fg);
+  --color-ok-dot: var(--ok-dot);
+  --color-btn-bg: var(--btn-bg);
+  --color-btn-fg: var(--btn-fg);
+  --color-island-line: var(--island-line);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-@media (min-width: 1024px) {
-  .desktop-shell {
-    display: flex;
-    min-height: 100dvh;
-    width: 100%;
-    align-items: safe center;
-    justify-content: safe center;
-    padding: 1.5rem;
-    overflow: auto;
-  }
-
-  .desktop-stage {
-    display: flex;
-    width: 100%;
-    max-width: 1510px;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .desktop-stage-inner {
-    gap: 1.5rem;
-    width: 100%;
-  }
-
-  .desktop-sidebar {
-    flex: 0 0 340px;
-    min-width: 0;
-    height: min(709px, calc(100dvh - 3rem));
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-
-  .desktop-main {
-    flex: 1 1 0%;
-    min-width: 0;
-    max-width: 1108px;
-    height: min(888px, calc(100dvh - 3rem));
-    overflow: hidden;
-  }
-}
-
-@media (min-width: 1280px) {
-  .desktop-shell {
-    padding: 2rem 3rem;
-  }
-
-  .desktop-stage-inner {
-    gap: 32px;
-  }
-
-  .desktop-sidebar {
-    flex: 0 0 370px;
-    height: min(709px, calc(100dvh - 4rem));
-  }
-
-  .desktop-main {
-    height: min(888px, calc(100dvh - 4rem));
-  }
-}
-
-.section-title {
-  display: none;
-}
-
-.section-panel {
-  display: none;
-  min-height: 0;
-  flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-@media (max-width: 1023px) {
-  .section-panel {
-    flex: 1 1 auto;
-  }
-}
-
-@media (min-width: 1024px) {
-  .section-panel {
-    flex: 0 1 auto;
-  }
-}
-
-html[data-section="sobre"] .section-title[data-panel="sobre"],
-html[data-section="aprendizado"] .section-title[data-panel="aprendizado"],
-html[data-section="portfolio"] .section-title[data-panel="portfolio"],
-html[data-section="contato"] .section-title[data-panel="contato"] {
-  display: block;
-}
-
-html[data-section="sobre"] .section-panel[data-panel="sobre"],
-html[data-section="aprendizado"] .section-panel[data-panel="aprendizado"],
-html[data-section="portfolio"] .section-panel[data-panel="portfolio"],
-html[data-section="contato"] .section-panel[data-panel="contato"] {
-  display: flex;
-}
-
-html[data-section="sobre"] .nav-link[data-nav="sobre"],
-html[data-section="aprendizado"] .nav-link[data-nav="aprendizado"],
-html[data-section="portfolio"] .nav-link[data-nav="portfolio"],
-html[data-section="contato"] .nav-link[data-nav="contato"] {
-  color: var(--accent);
+html {
+  background: var(--bg);
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  font-weight: 500;
-  line-height: 1.7;
+  background: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-a svg,
-button svg,
-.hit-area svg {
-  pointer-events: none;
+::selection {
+  background: var(--accent-soft);
 }
 
-/* Painted hit fill so transparent padding still receives clicks (3D/zoom). */
-.hit-area {
-  isolation: isolate;
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
-.hit-area::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: rgba(255, 255, 255, 0.001);
-  pointer-events: auto;
+/* ---------- Blueprint ---------- */
+
+/* Hachura diagonal das laterais e das áreas de prévia. */
+@utility hatch {
+  background-image: repeating-linear-gradient(-45deg, var(--hatch) 0 1px, transparent 1px 8px);
 }
 
-.project-scene {
-  -webkit-perspective: 1000px;
-  perspective: 1000px;
-  perspective-origin: 50% 50%;
-}
-
-.project-inner {
+/* Linha horizontal que atravessa a página inteira, no topo do elemento. */
+@utility rule-t {
   position: relative;
-  min-height: 100%;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transform: translate3d(0, 0, 0);
-  transform-origin: center center;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.project-inner.is-animating {
-  will-change: transform;
-}
-
-.project-inner.is-snap,
-.project-inner.is-settled {
-  transition: none;
-}
-
-.project-inner.is-flipped {
-  min-height: 23rem;
-  transform: rotateY(180deg) translate3d(0, 0, 0);
-}
-
-/* Ranges where the grid is two narrow columns: the back copy needs more room. */
-@media (min-width: 640px) and (max-width: 767px),
-  (min-width: 1024px) and (max-width: 1519px) {
-  .project-inner.is-flipped {
-    min-height: 26rem;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100vw;
+    right: -100vw;
+    height: 1px;
+    background: var(--line);
+    pointer-events: none;
   }
 }
 
-.project-inner.is-settled {
-  will-change: auto;
-  -webkit-transform-style: flat;
-  transform-style: flat;
-  transform: none;
-}
+/* ---------- Animações ---------- */
 
-.project-face {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  transform: translate3d(0, 0, 0);
-}
-
-.project-front {
-  height: 100%;
-}
-
-.project-back {
-  position: absolute;
-  inset: 0;
-  transform: rotateY(180deg) translate3d(0, 0, 0);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.project-inner:not(.is-flipped) .project-back {
-  pointer-events: none;
-}
-
-.project-inner.is-settled .project-front {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.project-inner.is-settled .project-back {
-  -webkit-backface-visibility: visible;
-  backface-visibility: visible;
-  transform: none;
-}
-
-.skills-viewport {
-  overflow: visible;
-  clip-path: inset(-8px 0);
-}
-
-.skills-track {
-  --skills-per-view: 3;
-  overflow: visible;
-  will-change: transform;
-  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.skills-track.is-instant {
-  transition: none;
-}
-
-@media (min-width: 1280px) {
-  .skills-track {
-    --skills-per-view: 4;
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
 
-.skills-slot {
-  position: relative;
-  z-index: 0;
-  overflow: visible;
-}
-
-.skills-slot:hover,
-.skills-slot:focus-within,
-.skills-slot.is-open {
-  z-index: 5;
-}
-
-.skill-scene {
-  position: relative;
-  overflow: visible;
-  -webkit-perspective: 1000px;
-  perspective: 1000px;
-  perspective-origin: 50% 50%;
-  transform: translate3d(0, 0, 0);
-  transform-origin: center center;
-  transition: transform 180ms ease;
-}
-
-.skill-inner {
-  position: relative;
-  overflow: visible;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transform: translate3d(0, 0, 0);
-  transform-origin: center center;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.skill-inner.is-animating {
-  will-change: transform;
-}
-
-.skill-inner.is-snap,
-.skill-inner.is-settled {
-  transition: none;
-}
-
-.skill-inner.is-flipped {
-  transform: rotateY(180deg) translate3d(0, 0, 0);
-}
-
-.skill-inner.is-settled {
-  will-change: auto;
-  -webkit-transform-style: flat;
-  transform-style: flat;
-  transform: none;
-}
-
-.skill-face {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 0.75rem;
-  text-align: center;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  transform: translate3d(0, 0, 0);
-}
-
-.skill-face svg {
-  shape-rendering: geometricPrecision;
-}
-
-.skill-back {
-  transform: rotateY(180deg) translate3d(0, 0, 0);
-}
-
-.skill-inner:not(.is-flipped) .skill-back {
-  pointer-events: none;
-}
-
-.skill-inner.is-settled .skill-front {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.skill-inner.is-settled .skill-back {
-  -webkit-backface-visibility: visible;
-  backface-visibility: visible;
-  transform: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .skill-scene:hover:not(.is-open),
-  .skill-scene:focus-visible:not(.is-open) {
-    z-index: 2;
-    transform: translate3d(0, -3px, 0) scale(1.04);
+@keyframes eq {
+  from {
+    transform: scaleY(0.35);
+  }
+  to {
+    transform: scaleY(1);
   }
 }
 
-.avatar-link {
-  display: inline-flex;
-  cursor: pointer;
-  transform-origin: center center;
-  transition: transform 280ms ease, filter 280ms ease;
+@keyframes ping-soft {
+  0% {
+    box-shadow: 0 0 0 0 rgb(74 222 128 / 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 9px rgb(74 222 128 / 0);
+  }
 }
 
-.avatar-link:hover,
-.avatar-link:focus-visible {
-  transform: scale(1.06);
-  filter: drop-shadow(0 0 16px rgba(59, 130, 246, 0.5))
-    drop-shadow(0 0 8px rgba(255, 255, 255, 0.28));
+@utility animate-rise {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@utility animate-eq {
+  transform-origin: bottom;
+  animation: eq 0.9s ease-in-out infinite alternate;
+}
+
+@utility animate-ping-soft {
+  animation: ping-soft 2s ease-out infinite;
+}
+
+/* Elementos com data-reveal aparecem quando entram na tela.
+   A classe .js só existe se o script do <head> rodou, então sem JS nada some. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.js [data-reveal][data-visible] {
+  opacity: 1;
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skills-track {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-rise,
+  .animate-eq,
+  .animate-ping-soft {
+    animation: none !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
     transition: none;
-  }
-
-  .avatar-link,
-  .avatar-link:hover,
-  .avatar-link:focus-visible {
-    transition: none;
-    transform: none;
-  }
-
-  .project-inner,
-  .project-inner.is-animating {
-    transition: none;
-    will-change: auto;
-  }
-
-  .project-inner.is-flipped,
-  .project-inner.is-settled {
-    transform: none;
-  }
-
-  .project-inner.is-flipped .project-front {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .project-inner:not(.is-flipped) .project-back {
-    visibility: hidden;
-    transform: none;
-  }
-
-  .project-inner.is-flipped .project-back {
-    position: relative;
-    transform: none;
-  }
-
-  .skill-scene,
-  .skill-scene:hover,
-  .skill-scene:hover:not(.is-open),
-  .skill-scene:focus-visible,
-  .skill-scene:focus-visible:not(.is-open) {
-    transition: none;
-    transform: none;
-  }
-
-  .skill-inner,
-  .skill-inner.is-animating {
-    transition: none;
-    will-change: auto;
-  }
-
-  .skill-inner.is-flipped,
-  .skill-inner.is-settled {
-    transform: none;
-  }
-
-  .skill-inner.is-flipped .skill-front {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .skill-inner:not(.is-flipped) .skill-back {
-    visibility: hidden;
-    transform: none;
-  }
-
-  .skill-inner.is-flipped .skill-back {
-    transform: none;
   }
 }

@@ -9,11 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "geist": "^1.9.2",
     "lucide-react": "^1.46.0",
     "next": "16.3.5",
     "react": "19.2.8",
-    "react-dom": "19.2.8",
-    "simple-icons": "^16.31.0"
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
