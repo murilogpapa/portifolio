@@ -5,7 +5,7 @@ import { profile } from "@/lib/content";
 import "./globals.css";
 
 const description =
-  "Desenvolvedor full stack com foco em front-end. Aplicações web completas com React, Next.js, TypeScript e Supabase.";
+  "Desenvolvedor full stack com foco em front-end. Construo aplicações web completas com React, Next.js, TypeScript e Supabase, como o NotchMuc e o Salão Bio.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(profile.site),

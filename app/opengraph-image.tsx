@@ -8,13 +8,68 @@ export const contentType = "image/png";
 
 const fontDir = join(process.cwd(), "node_modules/geist/dist/fonts");
 
+const BG = "#0b0b0c";
+const FG = "#f2f2f3";
+const DIM = "#8e8e96";
+const NOTE = "#7c7c86";
+const LINE = "rgba(255,255,255,0.09)";
+const ACCENT = "#7cb4ff";
+const HATCH =
+  "repeating-linear-gradient(-45deg, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 1px, transparent 1px, transparent 8px)";
+const GUTTER = 48;
+
+function HLine({ y }: { y: number }) {
+  return <div style={{ position: "absolute", left: 0, right: 0, top: y, height: 1, background: LINE, display: "flex" }} />;
+}
+
+function Note({ x, y, children }: { x: number; y: number; children: string }) {
+  return (
+    <div style={{ position: "absolute", left: x, top: y, fontFamily: "Geist Mono", fontSize: 14, color: NOTE, display: "flex" }}>
+      {children}
+    </div>
+  );
+}
+
+/** Anel de uso de IA, como os da ilha do NotchMuc. */
+function Ring({ color }: { color: string }) {
+  return (
+    <div
+      style={{
+        width: 30,
+        height: 30,
+        borderRadius: 999,
+        border: "4px solid rgba(255,255,255,0.12)",
+        borderTopColor: color,
+        borderRightColor: color,
+        display: "flex",
+      }}
+    />
+  );
+}
+
+/**
+ * No gerador de imagem (Satori) o "r" final da Geist deixa uma sobra antes do
+ * espaço, que o navegador não mostra. Cada palavra vira um item com gap fixo,
+ * e as que terminam em "r" descontam essa sobra.
+ */
+function Words({ text, size, tracking, style }: { text: string; size: number; tracking: number; style?: React.CSSProperties }) {
+  return (
+    <div style={{ display: "flex", fontWeight: 600, fontSize: size, letterSpacing: tracking, gap: Math.round(size * 0.24), ...style }}>
+      {text.split(" ").map((word, i) => (
+        <span key={i} style={{ marginRight: word.endsWith("r") ? -Math.round(size * 0.18) : 0 }}>
+          {word}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export default async function Image() {
-  const [semibold, mono] = await Promise.all([
+  const [regular, semibold, mono] = await Promise.all([
+    readFile(join(fontDir, "geist-sans/Geist-Regular.ttf")),
     readFile(join(fontDir, "geist-sans/Geist-SemiBold.ttf")),
     readFile(join(fontDir, "geist-mono/GeistMono-Regular.ttf")),
   ]);
-
-  const line = "rgba(255,255,255,0.09)";
 
   return new ImageResponse(
     (
@@ -23,52 +78,206 @@ export default async function Image() {
           width: "100%",
           height: "100%",
           display: "flex",
-          background: "#0b0b0c",
-          color: "#f2f2f3",
-          fontFamily: "Geist",
           position: "relative",
+          background: BG,
+          color: FG,
+          fontFamily: "Geist",
         }}
       >
-        <div style={{ position: "absolute", top: 0, bottom: 0, left: 72, width: 1, background: line }} />
-        <div style={{ position: "absolute", top: 0, bottom: 0, right: 72, width: 1, background: line }} />
-        <div style={{ position: "absolute", left: 0, right: 0, top: 150, height: 1, background: line }} />
-        <div style={{ position: "absolute", left: 0, right: 0, top: 510, height: 1, background: line }} />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            padding: "0 112px",
-            gap: 22,
-            width: "100%",
-          }}
-        >
+        {/* laterais hachuradas e linhas do blueprint */}
+        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: GUTTER, display: "flex", backgroundImage: HATCH, borderRight: `1px solid ${LINE}` }} />
+        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: GUTTER, display: "flex", backgroundImage: HATCH, borderLeft: `1px solid ${LINE}` }} />
+        <HLine y={88} />
+        <HLine y={344} />
+        <HLine y={528} />
+
+        {/* ilha de navegação */}
+        <div style={{ position: "absolute", left: 0, right: 0, top: 20, display: "flex", justifyContent: "center" }}>
           <div
             style={{
               display: "flex",
-              alignSelf: "flex-start",
               alignItems: "center",
-              gap: 12,
-              padding: "10px 20px",
+              gap: 6,
+              padding: 6,
               borderRadius: 999,
               background: "#000",
               border: "1px solid rgba(255,255,255,0.12)",
-              fontFamily: "Geist Mono",
-              fontSize: 22,
-              color: "#8e8e96",
             }}
           >
-            <div style={{ width: 10, height: 10, borderRadius: 999, background: "#4ade80" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "4px 14px 4px 4px" }}>
+              <div
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 999,
+                  background: FG,
+                  color: BG,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontFamily: "Geist Mono",
+                  fontSize: 12,
+                }}
+              >
+                MP
+              </div>
+              <div style={{ display: "flex", fontSize: 17, fontWeight: 600 }}>Murilo</div>
+            </div>
+            {["Projetos", "Stack", "Trajetória", "Contato"].map((item) => (
+              <div key={item} style={{ display: "flex", padding: "0 12px", fontSize: 15, color: "#b4b4bb", fontWeight: 400 }}>
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* lado esquerdo de cima: status e NotchMuc */}
+        <Note x={88} y={102}>rounded-full bg-black ring-1 ring-white/10</Note>
+        <div style={{ position: "absolute", left: 88, top: 136, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 16 }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "10px 18px",
+              borderRadius: 999,
+              background: "rgba(74,222,128,0.12)",
+              color: "#86efac",
+              fontSize: 19,
+              fontWeight: 600,
+            }}
+          >
+            <div style={{ width: 10, height: 10, borderRadius: 999, background: "#4ade80", display: "flex" }} />
+            Aberto a novas oportunidades
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+              padding: "8px 22px 8px 8px",
+              borderRadius: 999,
+              background: "#000",
+              border: "1px solid rgba(255,255,255,0.12)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "flex-end", gap: 4, height: 40, padding: "11px 12px", borderRadius: 999, background: "#17171a" }}>
+              {[10, 18, 13, 8].map((h, i) => (
+                <div key={i} style={{ width: 4, height: h, borderRadius: 2, background: ACCENT, display: "flex" }} />
+              ))}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <div style={{ display: "flex", fontFamily: "Geist Mono", fontSize: 13, letterSpacing: 1, color: DIM }}>CONSTRUINDO AGORA</div>
+              <div style={{ display: "flex", fontSize: 19, fontWeight: 600 }}>NotchMuc, ilha no topo da tela</div>
+            </div>
+          </div>
+        </div>
+
+        {/* lado direito de cima: tela com a ilha do NotchMuc */}
+        <div
+          style={{
+            position: "absolute",
+            left: 690,
+            top: 112,
+            width: 430,
+            height: 214,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            borderRadius: 16,
+            border: "1px solid rgba(255,255,255,0.16)",
+            background: "#0e0e10",
+            overflow: "hidden",
+            boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
+          }}
+        >
+          {/* ilha expandida */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+              marginTop: 10,
+              padding: "10px 16px 10px 12px",
+              borderRadius: 26,
+              background: "#000",
+              border: "1px solid rgba(255,255,255,0.12)",
+            }}
+          >
+            <Ring color="#7cb4ff" />
+            <Ring color="#f5a3ff" />
+            <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.12)", display: "flex" }} />
+            <div style={{ width: 30, height: 30, borderRadius: 8, background: "#26262b", display: "flex" }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+              <div style={{ display: "flex", fontSize: 13, fontWeight: 600 }}>Tocando agora</div>
+              <div style={{ display: "flex", fontSize: 11, color: DIM }}>Módulo de mídia</div>
+            </div>
+            <div style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 16, marginLeft: 6 }}>
+              {[7, 15, 10, 13].map((h, i) => (
+                <div key={i} style={{ width: 3, height: h, borderRadius: 2, background: ACCENT, display: "flex" }} />
+              ))}
+            </div>
+          </div>
+
+          {/* módulos soltos pela tela */}
+          {[
+            { x: 26, y: 86 },
+            { x: 128, y: 106 },
+            { x: 292, y: 102 },
+            { x: 374, y: 82 },
+          ].map((p, i) => (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                left: p.x,
+                top: p.y,
+                width: 30,
+                height: 30,
+                borderRadius: 9,
+                border: "1px solid rgba(255,255,255,0.14)",
+                background: "rgba(255,255,255,0.03)",
+                display: "flex",
+              }}
+            />
+          ))}
+
+          {/* nome do app e olhos do Mucky */}
+          <div style={{ position: "absolute", left: 20, bottom: 16, display: "flex", flexDirection: "column", gap: 2 }}>
+            <div style={{ display: "flex", fontSize: 24, fontWeight: 600, letterSpacing: -0.5 }}>NotchMuc</div>
+            <div style={{ display: "flex", fontSize: 12, color: DIM }}>App desktop · Windows e macOS</div>
+          </div>
+          <div style={{ position: "absolute", right: 30, bottom: 20, display: "flex", alignItems: "flex-end", gap: 14 }}>
+            <div style={{ width: 19, height: 30, borderRadius: 999, background: "#fff", transform: "rotate(-12deg)", display: "flex" }} />
+            <div style={{ width: 19, height: 30, borderRadius: 999, background: "#fff", transform: "rotate(-12deg) translateY(-5px)", display: "flex" }} />
+          </div>
+        </div>
+
+        {/* nome e cargo */}
+        <Note x={88} y={318}>text-8xl font-semibold tracking-tighter</Note>
+        <div style={{ position: "absolute", left: 84, top: 354, display: "flex", flexDirection: "column" }}>
+          <Words text="Murilo G. Papa" size={92} tracking={-4} style={{ lineHeight: 1 }} />
+          <Words text="Desenvolvedor full stack." size={50} tracking={-2} style={{ lineHeight: 1.1, color: DIM, marginTop: 6 }} />
+        </div>
+
+        {/* faixa de baixo */}
+        <div
+          style={{
+            position: "absolute",
+            left: 88,
+            right: 88,
+            top: 556,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontFamily: "Geist Mono",
+            fontSize: 22,
+          }}
+        >
+          <div style={{ display: "flex", color: ACCENT }}>React · Next.js · TypeScript · Supabase</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, color: DIM }}>
+            <div style={{ width: 9, height: 9, borderRadius: 999, background: "#4ade80", display: "flex" }} />
             murilogp.dev
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-            <span style={{ fontSize: 120, letterSpacing: -5 }}>Murilo G. Papa</span>
-            <span style={{ fontSize: 64, letterSpacing: -2, color: "#8e8e96", marginTop: 8 }}>
-              Desenvolvedor full stack.
-            </span>
-          </div>
-          <div style={{ fontFamily: "Geist Mono", fontSize: 24, color: "#7cb4ff" }}>
-            React · Next.js · TypeScript · Supabase
           </div>
         </div>
       </div>
@@ -76,6 +285,7 @@ export default async function Image() {
     {
       ...size,
       fonts: [
+        { name: "Geist", data: regular, style: "normal", weight: 400 },
         { name: "Geist", data: semibold, style: "normal", weight: 600 },
         { name: "Geist Mono", data: mono, style: "normal", weight: 400 },
       ],
