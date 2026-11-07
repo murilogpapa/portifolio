@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { nav } from "@/lib/content";
 import { ThemeToggle } from "./theme-toggle";
@@ -36,9 +37,14 @@ export function IslandNav() {
             href="#topo"
             className="flex items-center gap-2.5 rounded-full py-2 pr-3.5 pl-2 text-[15px] font-semibold text-[#f2f2f3]"
           >
-            <span className="flex size-[30px] items-center justify-center rounded-full bg-[#f2f2f3] font-mono text-[11px] font-medium text-[#0b0b0c]">
-              MP
-            </span>
+            <Image
+              src="/avatar-nav.png"
+              alt=""
+              width={30}
+              height={30}
+              preload
+              className="size-[30px] rounded-full bg-[#f2f2f3]"
+            />
             Murilo
           </a>
           <ul className="hidden items-center gap-0.5 md:flex">
