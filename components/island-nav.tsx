@@ -35,16 +35,9 @@ export function IslandNav() {
         >
           <a
             href="#topo"
-            className="flex items-center gap-2.5 rounded-full py-2 pr-3.5 pl-2 text-[15px] font-semibold text-[#f2f2f3]"
+            className="flex items-center gap-2 rounded-full py-0.5 pr-3.5 pl-1.5 text-[15px] font-semibold text-[#f2f2f3]"
           >
-            <Image
-              src="/avatar-nav.png"
-              alt=""
-              width={30}
-              height={30}
-              preload
-              className="size-[30px] rounded-full bg-[#f2f2f3]"
-            />
+            <Image src="/avatar-nav.png" alt="" width={40} height={40} preload className="size-10" />
             Murilo
           </a>
           <ul className="hidden items-center gap-0.5 md:flex">
