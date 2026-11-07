@@ -157,7 +157,7 @@ export const otherProjects: MiniProject[] = [
 export const schoolProjects: MiniProject[] = [
   {
     name: "WebGarage",
-    meta: "ADS · Senac",
+    meta: "Projeto Integrador · 2º semestre de ADS",
     description: "Site de concessionária com consulta de preços pela API da Tabela FIPE.",
     stack: "Angular · TypeScript",
     href: "https://github.com/murilogpapa/webgarage",
