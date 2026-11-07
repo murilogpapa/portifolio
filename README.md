@@ -1,38 +1,37 @@
+<a href="https://murilogp.dev">
+  <img src="https://murilogp.dev/opengraph-image" alt="murilogp.dev, portfólio de Murilo G. Papa" width="100%">
+</a>
+
 # murilogp.dev
 
-Portfólio do Murilo Giampiccolo Papa. Next.js 16 (App Router), React 19, TypeScript e Tailwind CSS 4.
+Meu portfólio: quem eu sou, o que construí e como falar comigo. Feito do zero em Next.js 16, com cara de blueprint, tema claro e escuro e projeto rodando ao vivo dentro da página.
 
-## Rodando
+**[Abrir o site →](https://murilogp.dev)**
 
-```bash
-npm install
-npm run dev      # http://localhost:3000
-npm run build    # build de produção
-npm run lint
-```
+## O que tem lá
 
-## Onde mexer
+- **Projetos em destaque:** o NotchMuc roda ao vivo num iframe, o Salão Bio aparece num print da página inteira que dá pra rolar e o Ordem Files mostra uma ficha de personagem.
+- **Outros projetos, faculdade e cursos**, stack separada por área, trajetória e contato com currículo em PDF.
 
-- **Textos, projetos, stack e trajetória:** `lib/content.ts`. Dá pra mudar quase tudo sem tocar em componente.
-- **Cores dos temas (escuro e claro):** variáveis no topo de `app/globals.css`.
-- **Currículo:** `public/curriculo.pdf`.
-- **Prints de projetos:** `public/projetos/`.
+## Detalhes de construção
 
-## Como funciona
+- **Visual blueprint:** linhas que atravessam a página, laterais hachuradas e anotações com as classes do Tailwind, inspirado no site do Tailwind CSS.
+- **Tema claro e escuro sem piscar:** um script no `<head>` aplica o tema salvo antes da primeira pintura.
+- **Responsivo de verdade:** a navegação em ilha vira menu no celular e as grades se reorganizam por breakpoint. Testado de 390 a 1440 px.
+- **Animações** de entrada e ao rolar, que desligam com "reduzir movimento".
+- **Prévias travadas:** o iframe e o print só capturam a rolagem depois de um clique, pra página não ficar presa.
+- **Imagem de compartilhamento** gerada no build com `next/og`, com a fonte Geist embutida.
+- **Acessível:** HTML semântico, foco visível, contraste conferido nos dois temas e link pra pular direto pro conteúdo.
+- **Texto separado do código:** todo o conteúdo fica em `lib/content.ts`, fora dos componentes.
 
-- **Blueprint:** a coluna central tem bordas e laterais hachuradas (`components/blueprint.tsx`). Cada faixa usa a classe `rule-t`, que desenha uma linha atravessando a página inteira. As anotações em mono (`<Note>`) somem no celular.
-- **Tema:** escuro por padrão. O botão de sol e lua na ilha troca o `data-theme` do `<html>` e salva a escolha no `localStorage` (chave `tema`). Um script no `<head>` aplica o tema antes da primeira pintura, então não pisca.
-- **Animações:** o topo entra em sequência ao carregar; o resto aparece ao rolar (`data-reveal` + `components/reveal-observer.tsx`). Tudo desliga com "reduzir movimento" do sistema.
-- **Prévias dos projetos:** definidas em `preview` de cada projeto em `lib/content.ts`. `live` abre o site num iframe (`components/live-preview.tsx`); `image` mostra um print, e com `scroll: true` a janela rola pela página inteira (`components/scroll-shot.tsx`). Os dois começam travados pra rolagem da página não ficar presa; um clique libera.
+## Stack
 
-## Para o iframe funcionar
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · Geist · lucide-react · Vercel
 
-Hoje só o NotchMuc usa iframe (o Salão Bio bloqueia ser embutido, então usa print). Um site só abre dentro do murilogp.dev se permitir isso. No notchmuc.murilogp.dev, ou em qualquer site que você passar pra `live`, mande este header nas páginas:
+## Rodar localmente
 
-```
-Content-Security-Policy: frame-ancestors 'self' https://murilogp.dev
-```
+`npm install` e depois `npm run dev`.
 
-e remova qualquer `X-Frame-Options: DENY` ou `SAMEORIGIN`. No Next.js isso vai em `headers()` do `next.config.ts`.
+---
 
-Evite liberar `https://*.vercel.app`: isso deixaria qualquer site hospedado na Vercel embutir os seus (risco de clickjacking). Por isso, nas prévias da Vercel os iframes aparecem bloqueados; só no domínio final eles carregam.
+Murilo G. Papa · [murilogp.dev](https://murilogp.dev) · [LinkedIn](https://www.linkedin.com/in/murilogiampiccolopapa/) · [murilopapag@gmail.com](mailto:murilopapag@gmail.com)
