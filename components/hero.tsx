@@ -85,7 +85,7 @@ export function Hero({ c }: { c: Content }) {
             {c.ui.seeProjects}
           </a>
           <a
-            href={profile.resume}
+            href={c.profile.resume}
             target="_blank"
             rel="noopener"
             className="flex min-h-12 items-center gap-2 rounded-full border border-line-strong px-5 text-[15px] font-medium transition-colors hover:bg-chip"

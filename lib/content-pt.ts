@@ -12,6 +12,7 @@ export const pt: Content = {
       "Foco em front-end. Construo aplicações web completas com React, Next.js, TypeScript e Supabase: autenticação, segurança no banco com RLS, pagamentos via API, testes e deploy na Vercel.",
     meta: "São Paulo, SP · ADS no Senac (noturno) · disponível no período diurno",
     status: "Aberto a novas oportunidades",
+    resume: "/curriculo.pdf",
   },
   nav: [
     { href: "#projetos", label: "Projetos" },
@@ -191,7 +192,12 @@ export const pt: Content = {
       period: "2026 · em andamento",
       title: "IA para quem programa de verdade · curso.dev",
       description:
-        "Agentes de codificação, MCP, skills e Spec-Driven Development. Inglês B2, uso diário com clientes internacionais.",
+        "Agentes de codificação, MCP, skills e Spec-Driven Development.",
+    },
+    {
+      period: "Idiomas",
+      title: "Inglês B2 (intermediário avançado)",
+      description: "Português nativo",
     },
   ],
   ui: {

@@ -44,7 +44,7 @@ export function Contact({ c }: { c: Content }) {
               WhatsApp
             </a>
             <a
-              href={profile.resume}
+              href={c.profile.resume}
               target="_blank"
               rel="noopener"
               className="flex min-h-12 items-center rounded-full bg-[#f2f2f3] px-[22px] text-[15px] font-semibold text-[#0b0b0c] transition-opacity hover:opacity-90"

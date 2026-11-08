@@ -19,7 +19,6 @@ export const profile = {
   name: "Murilo G. Papa",
   fullName: "Murilo Giampiccolo Papa",
   email: "murilopapag@gmail.com",
-  resume: "/curriculo.pdf",
   site: "https://murilogp.dev",
 } as const;
 
@@ -71,7 +70,7 @@ export type TimelineItem = { period: string; title: string; description: string 
 
 export type Content = {
   meta: { title: string; description: string };
-  profile: { role: string; summary: string; meta: string; status: string };
+  profile: { role: string; summary: string; meta: string; status: string; resume: string };
   nav: { href: string; label: string }[];
   featured: Featured[];
   otherProjects: MiniProject[];

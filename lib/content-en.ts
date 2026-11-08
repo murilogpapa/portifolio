@@ -12,6 +12,7 @@ export const en: Content = {
       "Front-end focused. I build complete web applications with React, Next.js, TypeScript and Supabase: authentication, database security with RLS, payments through APIs, testing and deploys on Vercel.",
     meta: "São Paulo, Brazil · Systems Analysis and Development at Senac (evenings) · available during the day",
     status: "Open to new opportunities",
+    resume: "/resume.pdf",
   },
   nav: [
     { href: "#projetos", label: "Projects" },
@@ -192,7 +193,12 @@ export const en: Content = {
       period: "2026 · in progress",
       title: "IA para quem programa de verdade · curso.dev",
       description:
-        "Coding agents, MCP, skills and Spec-Driven Development. English B2, used daily with international clients.",
+        "Coding agents, MCP, skills and Spec-Driven Development.",
+    },
+    {
+      period: "Languages",
+      title: "English B2 (upper intermediate)",
+      description: "Native Portuguese",
     },
   ],
   ui: {
@@ -206,7 +212,7 @@ export const en: Content = {
     building: "Building now",
     buildingDesc: ", an interactive island at the top of the screen",
     seeProjects: "See projects",
-    resume: "Résumé (PDF, in Portuguese)",
+    resume: "Résumé (PDF)",
     projectsTitle: "Projects",
     projectsSubtitle: "NotchMuc is running live right here: go ahead, click around.",
     allOnGithub: "Everything on GitHub",
