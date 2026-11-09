@@ -73,8 +73,8 @@ export const pt: Content = {
       stack: "Next.js · Supabase · Asaas · Vitest",
     },
     {
-      name: "Ordem Files",
-      meta: "2024 · web app",
+      name: "SaaS para RPG de mesa",
+      meta: "2024 · SaaS",
       description:
         "Plataforma de mesas de Ordem Paranormal que criei pro meu grupo de RPG, com fichas de personagem, ferramentas do mestre e temas visuais. Usada por mais de 20 jogadores.",
       stack: "React · TypeScript · Tailwind CSS · Supabase",

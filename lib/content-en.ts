@@ -73,8 +73,8 @@ export const en: Content = {
       stack: "Next.js · Supabase · Asaas · Vitest",
     },
     {
-      name: "Ordem Files",
-      meta: "2024 · web app",
+      name: "Tabletop RPG SaaS",
+      meta: "2024 · SaaS",
       description:
         "A platform for Ordem Paranormal tabletop RPG campaigns that I built for my group, with character sheets, game master tools and visual themes. Used by more than 20 players.",
       stack: "React · TypeScript · Tailwind CSS · Supabase",
