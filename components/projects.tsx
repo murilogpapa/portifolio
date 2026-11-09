@@ -239,6 +239,10 @@ function MiniGroup({
             </li>
           );
         })}
+        {/* Casas vazias da última linha (3 colunas) ganham o hachurado em vez do cinza da grade. */}
+        {Array.from({ length: (3 - (items.length % 3)) % 3 }, (_, i) => (
+          <li key={`vazio-${i}`} aria-hidden="true" className="hatch hidden bg-bg lg:block" />
+        ))}
       </ul>
     </>
   );

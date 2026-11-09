@@ -63,24 +63,6 @@ export const en: Content = {
         scroll: true,
       },
     },
-    {
-      id: "ordem-files",
-      name: "Ordem Files",
-      badge: "2024",
-      kind: "Web app",
-      description:
-        "A platform for Ordem Paranormal tabletop RPG campaigns that I built for my group, with character sheets, game master tools and visual themes. Used by more than 20 players.",
-      bullets: [],
-      stack: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
-      preview: {
-        kind: "image",
-        src: "/projetos/ordem-files.webp",
-        alt: "Character sheet in Ordem Files (in Portuguese), with hit points, attributes and personal details",
-        width: 1180,
-        height: 885,
-        barLabel: "Character sheet · private group use",
-      },
-    },
   ],
   otherProjects: [
     {
@@ -89,6 +71,13 @@ export const en: Content = {
       description:
         "SaaS for on-call physicians: shifts, prescriptions, payments and reports for Brazil's Carnê-Leão income tax. RLS, rate limiting, LGPD compliance, Asaas and Google Calendar.",
       stack: "Next.js · Supabase · Asaas · Vitest",
+    },
+    {
+      name: "Ordem Files",
+      meta: "2024 · web app",
+      description:
+        "A platform for Ordem Paranormal tabletop RPG campaigns that I built for my group, with character sheets, game master tools and visual themes. Used by more than 20 players.",
+      stack: "React · TypeScript · Tailwind CSS · Supabase",
     },
     {
       name: "3D printing control panel",

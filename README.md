@@ -10,7 +10,7 @@ Meu portfólio: quem eu sou, o que construí e como falar comigo. Feito do zero 
 
 ## O que tem lá
 
-- **Projetos em destaque:** o NotchMuc roda ao vivo num iframe, o Salão Bio aparece num print da página inteira que dá pra rolar e o Ordem Files mostra uma ficha de personagem.
+- **Projetos em destaque:** o NotchMuc roda ao vivo num iframe e o Salão Bio aparece num print da página inteira que dá pra rolar. Os outros projetos ficam em cards, sem imagem.
 - **Outros projetos, faculdade e cursos**, stack separada por área, trajetória e contato com currículo em PDF.
 
 ## Detalhes de construção

@@ -63,24 +63,6 @@ export const pt: Content = {
         scroll: true,
       },
     },
-    {
-      id: "ordem-files",
-      name: "Ordem Files",
-      badge: "2024",
-      kind: "Web app",
-      description:
-        "Plataforma de mesas de Ordem Paranormal que criei pro meu grupo de RPG, com fichas de personagem, ferramentas do mestre e temas visuais. Usada por mais de 20 jogadores.",
-      bullets: [],
-      stack: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
-      preview: {
-        kind: "image",
-        src: "/projetos/ordem-files.webp",
-        alt: "Ficha de personagem no Ordem Files, com pontos de vida, atributos e dados pessoais",
-        width: 1180,
-        height: 885,
-        barLabel: "Ficha de personagem · uso privado do grupo",
-      },
-    },
   ],
   otherProjects: [
     {
@@ -89,6 +71,13 @@ export const pt: Content = {
       description:
         "SaaS para médicos plantonistas: plantões, receitas, pagamentos e relatórios para o Carnê-Leão. RLS, rate limiting, LGPD, Asaas e Google Calendar.",
       stack: "Next.js · Supabase · Asaas · Vitest",
+    },
+    {
+      name: "Ordem Files",
+      meta: "2024 · web app",
+      description:
+        "Plataforma de mesas de Ordem Paranormal que criei pro meu grupo de RPG, com fichas de personagem, ferramentas do mestre e temas visuais. Usada por mais de 20 jogadores.",
+      stack: "React · TypeScript · Tailwind CSS · Supabase",
     },
     {
       name: "Painel de controle impressão 3D",
